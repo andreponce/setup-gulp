@@ -1,0 +1,30 @@
+@import "reset";
+@import "function";
+@import "variables";
+@import "font";
+
+html{
+    font-size: 16px;
+}
+html,body {
+    //overflow: hidden;
+    -webkit-overflow-scrolling: auto;
+}
+body{
+    overflow-x: hidden;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar { 
+        display: none;
+    }
+}
+.hide{
+    display: none!important;
+}
+
+h1{
+    @include ZeitungMicroGCBlack(20px);
+    background: blue;
+}

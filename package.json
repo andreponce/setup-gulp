@@ -1,0 +1,43 @@
+{
+  "name": "setup-gulp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp build",
+    "dev": "gulp",
+    "prod": "cross-env NODE_ENV=production gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreponce/setup-gulp.git"
+  },
+  "author": "André Ponce",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreponce/setup-gulp/issues"
+  },
+  "homepage": "https://github.com/andreponce/setup-gulp#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "cross-env": "^6.0.3",
+    "del": "^5.1.0",
+    "fontkit": "^1.8.0",
+    "glob": "^7.1.6",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-fez-fontmin": "^1.0.6",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-image": "^5.1.0",
+    "gulp-minify-inline": "^1.1.0",
+    "gulp-mustache": "^4.1.2",
+    "gulp-remove-html-comments": "^1.0.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-tinypng-extended": "^2.0.2",
+    "gulp-uglify": "^3.0.2",
+    "gulp-webp": "^4.0.1"
+  }
+}

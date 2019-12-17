@@ -1,0 +1,19 @@
+.unselectable{
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.hide{
+    display: none!important;
+}
+.only-mobile{display: none;}
+.disable{
+    pointer-events:none!important;
+    cursor:default!important;
+}
+.enable{
+    pointer-events:auto;
+    cursor:auto;
+}

@@ -1,0 +1,23 @@
+/*@mixin ZeitungMicroGC($size,$weight,$style){font-family: 'Zeitung Micro GC',Arial,Verdana,Sans-Serif;font-weight: $weight;font-style: $style;font-size: $size;}
+@mixin ZeitungMicroGCRegular($size){@include ZeitungMicroGC($size,normal,normal);}
+
+@font-face {
+    font-family: 'Zeitung Micro GC';
+    font-display:swap;
+    //src: url('../font/ZeitungMicroGC-Black.eot');
+    src: local('Zeitung Micro GC Black'), 
+        url('../font/ZeitungMicroGC-Black.eot?#iefix') format('embedded-opentype'),
+        url('../font/ZeitungMicroGC-Black.woff2') format('woff2'),
+        url('../font/ZeitungMicroGC-Black.woff') format('woff'),
+        url('../font/ZeitungMicroGC-Black.ttf') format('truetype'),
+        url('../font/ZeitungMicroGC-Black.svg#ZeitungMicroGC-Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+}*/
+/**
+O arquivo font.scss é gerado automaticamente, 
+caso queira adicionar algum código extra adicione no font.mustache.scss 
+ou apague o font.mustache para editar ele livremente, porém 
+ao fazer fazê-lo o @fontface não será gerado automaticamente
+*/
+{{{scannedFonts}}}
