@@ -1,4 +1,5 @@
-(function(){
-    var test = "Started!";
-    console.log(test);
-}());
+import module from "./module";
+
+var test = "Started!";
+console.log(test);
+module()

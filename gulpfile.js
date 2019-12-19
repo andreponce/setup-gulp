@@ -14,6 +14,10 @@ const BUILD_CSS_FOLDER = `css`;
 const BUILD_JS_FOLDER = `js`;
 const BUILD_IMG_FOLDER = `img`;
 const BUILD_FONT_FOLDER = `font`;
+const BUILD_MAPS_FOLDER = `maps`;
+const AUTO_PREFIXER_TARGET = 'last 2 version';
+const CSS_SOURCES_FILES = ['essential.scss', 'nonessential.scss'];
+const JS_SOURCES_FILES = ['main.js'];
 const MUSTACHES = {
     locale: 'pt-br',
     gtm: '<!-- insert google tag manager here -->',//google tag manager
@@ -72,14 +76,15 @@ const MUSTACHES = {
 
 //dependences
 const { src, dest, watch, series, parallel, task } = require('gulp'),
+    noop = require("gulp-noop"),
     del = require('del'),
     glob = require("glob"),
     mustache = require('gulp-mustache'),
     concat = require('gulp-concat'),
-    minifyCSS = require('gulp-clean-css'),
     uglify = require('gulp-uglify'),
     htmlmin = require('gulp-htmlmin'),
     sass = require('gulp-sass'),
+    cssnano = require('gulp-cssnano'),
     sourcemaps = require('gulp-sourcemaps'),
     minifyInline = require('gulp-minify-inline'),
     removeHtmlComments = require('gulp-remove-html-comments'),
@@ -91,7 +96,11 @@ const { src, dest, watch, series, parallel, task } = require('gulp'),
     fontmin = require('gulp-fez-fontmin'),
     fontkit = require('fontkit'),
     fs = require('fs'),
-    browsersync = require("browser-sync").create();
+    browsersync = require("browser-sync").create(),
+    browserify = require("browserify"),
+    //babelify = require("babelify"),
+    source = require("vinyl-source-stream"),
+    buffer = require("vinyl-buffer");
 
 const SRC_FOLDER = 'src';
 const SRC_SCSS_FOLDER = `${SRC_FOLDER}/scss`;
@@ -138,35 +147,24 @@ task('css', (done) => {
             return null;
         },
         function () {
-            if (fs.existsSync(`${SRC_SCSS_FOLDER}/essential.scss`)) {
-                let essential = src([`${SRC_SCSS_FOLDER}/essential.scss`])
-                //production
-                if (isProduction) {
-                    essential.pipe(sass())
-                    essential.pipe(autoprefixer())  
-                    essential.pipe(minifyCSS());                  
-                } else {
-                    //essential.pipe(sourcemaps.init({loadMaps: true}))
-                    essential.pipe(plumber())
-                    essential.pipe(sass())
-                    //essential.pipe(sourcemaps.write(`${BUILD_FOLDER}/maps`))
-                    essential.pipe(autoprefixer())
+            CSS_SOURCES_FILES.forEach(function (fileName, index) {
+                let path = `${SRC_SCSS_FOLDER}/${fileName}`;
+                if (fs.existsSync(path)) {
+                    let style = src([path])
+                        .pipe(plumber())
+                        .pipe(!isProduction ? sourcemaps.init({ loadMaps: true }) : noop())
+                        .pipe(sass.sync({
+                            errLogToConsole: true,
+                            //outputStyle: isProduction ? 'compressed' : 'expanded'
+                        }))
+                        .pipe(autoprefixer(AUTO_PREFIXER_TARGET))
+                        .pipe(isProduction ? cssnano() : noop())
+                        .pipe(!isProduction ? sourcemaps.write(`${BUILD_MAPS_FOLDER}`) : noop())
+                        .pipe(dest(buildCssFolder))
+                        .pipe(browsersync.stream());
+                    return style;
                 }
-                essential.pipe(dest(buildCssFolder))
-                essential.pipe(browsersync.stream());
-                return essential;
-            }
-            return null;
-        },
-        function () {
-            if (fs.existsSync(`${SRC_SCSS_FOLDER}/nonessential.scss`)) {
-                let nonessential = src([`${SRC_SCSS_FOLDER}/nonessential.scss`])
-                    .pipe(sass())
-                    .pipe(autoprefixer())
-                if (isProduction) nonessential.pipe(minifyCSS());
-                nonessential.pipe(dest(buildCssFolder))
-                return nonessential
-            }
+            });
             return null;
         }
     ], done);
@@ -199,7 +197,7 @@ task('html', (done) => {
 });
 
 task('js', (done) => {
-    let buildJsFolder = `${BUILD_FOLDER}/${BUILD_JS_FOLDER}/`;
+    let buildJsFolder = `./${BUILD_FOLDER}/${BUILD_JS_FOLDER}/`;
 
     runSeries([
         function () {
@@ -207,12 +205,32 @@ task('js', (done) => {
             return null;
         },
         function () {
-            if (fs.existsSync(`${SRC_JS_FOLDER}/main.js`)) {
-                let js = src([`${SRC_JS_FOLDER}/main.js`])
-                if (isProduction) js.pipe(uglify())
-                js.pipe(dest(buildJsFolder))
-                return js;
-            }
+            JS_SOURCES_FILES.forEach(function (fileName, index) {
+                let path = `${SRC_JS_FOLDER}/${fileName}`;
+                if (fs.existsSync(path)) {
+                    /*let js = src([`${SRC_JS_FOLDER}/${fileName}`])
+                    if (isProduction) js.pipe(sourcemaps.init())
+                    if (isProduction) js.pipe(uglify())
+                    if (isProduction) js.pipe(sourcemaps.write(`${BUILD_MAPS_FOLDER}`))
+                    js.pipe(dest(buildJsFolder))
+                    return js;*/
+                    let bundle = browserify({
+                        entries: [path],
+                        plugin: [
+                            [require('esmify'), {}]
+                        ],
+                        debug: !isProduction
+                    })
+                        .bundle()
+                        .pipe(source(fileName))
+                        .pipe(buffer())
+                        //.pipe(!isProduction ? sourcemaps.init({ loadMaps: true }) : noop())
+                        .pipe(isProduction ? uglify() : noop())
+                        //.pipe(!isProduction ? sourcemaps.write(`${BUILD_MAPS_FOLDER}`) : noop())
+
+                    return bundle.pipe(dest(buildJsFolder)).pipe(browsersync.stream());
+                }
+            });
             return null;
         }
     ], done);
@@ -488,7 +506,7 @@ task('default', () => {
     watch([`${SRC_FOLDER}/**/*.{html,php}`], parallel(['html']));
     watch([`${SRC_ASSETS_FOLDER}/**/*.ttf`], parallel(['fonts']));
     watch([`${SRC_ASSETS_FOLDER}/**/*.{png,jpg,jpeg,gif,svg}`], parallel(['images']));
-    watch(`${BUILD_FOLDER}/**/*.{html,php,js}`).on('change', browsersync.reload);
+    watch([`${BUILD_FOLDER}/**/*.{html,php,js}`, `!${BUILD_FOLDER}/**/*.map`]).on('change', browsersync.reload);
 
     series(['fonts', 'images', 'css', 'js', 'html', 'browser-sync'])()
 });
