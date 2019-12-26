@@ -4,189 +4,163 @@ caso queira adicionar algum código extra adicione no font.mustache.scss
 ou apague o font.mustache para editar ele livremente, porém 
 ao fazer fazê-lo o @fontface não será gerado automaticamente
 */
-        @mixin Chivo($size,$weight,$style){font-family: 'Chivo',Arial,Verdana,Sans-Serif;font-weight: $weight;font-style: $style;font-size: $size;}
-        @mixin ZeitungMicroGC($size,$weight,$style){font-family: 'Zeitung Micro GC',Arial,Verdana,Sans-Serif;font-weight: $weight;font-style: $style;font-size: $size;}
-        
-        @mixin ChivoBlack($size){@include Chivo($size,900,normal);}
-        @mixin ChivoBlackItalic($size){@include Chivo($size,900,italic);}
-        @mixin ChivoBold($size){@include Chivo($size,700,normal);}
-        @mixin ChivoBoldItalic($size){@include Chivo($size,700,italic);}
-        @mixin ChivoItalic($size){@include Chivo($size,400,italic);}
-        @mixin ChivoLight($size){@include Chivo($size,300,normal);}
-        @mixin ChivoLightItalic($size){@include Chivo($size,300,italic);}
-        @mixin ChivoRegular($size){@include Chivo($size,400,normal);}
-        @mixin ZeitungMicroGCBlack($size){@include ZeitungMicroGC($size,900,normal);}
-        @mixin ZeitungMicroGCBold($size){@include ZeitungMicroGC($size,700,normal);}
-        @mixin ZeitungMicroGCExtralight($size){@include ZeitungMicroGC($size,200,normal);}
-        @mixin ZeitungMicroGCRegular($size){@include ZeitungMicroGC($size,400,normal);}
-        @mixin ZeitungMicroGCSemibold($size){@include ZeitungMicroGC($size,600,normal);}
+    @mixin Chivo($size,$weight,$style){font-family: 'Chivo',Arial,Verdana,Sans-Serif;font-weight: $weight;font-style: $style;font-size: $size;}
+    @mixin ZeitungMicroGC($size,$weight,$style){font-family: 'Zeitung Micro GC',Arial,Verdana,Sans-Serif;font-weight: $weight;font-style: $style;font-size: $size;}
+    
+    @mixin ChivoBlack($size){@include Chivo($size,900,normal);}
+    @mixin ChivoBlackItalic($size){@include Chivo($size,900,italic);}
+    @mixin ChivoBold($size){@include Chivo($size,700,normal);}
+    @mixin ChivoBoldItalic($size){@include Chivo($size,700,italic);}
+    @mixin ChivoItalic($size){@include Chivo($size,400,italic);}
+    @mixin ChivoLight($size){@include Chivo($size,300,normal);}
+    @mixin ChivoLightItalic($size){@include Chivo($size,300,italic);}
+    @mixin ChivoRegular($size){@include Chivo($size,400,normal);}
+    @mixin ZeitungMicroGCBlack($size){@include ZeitungMicroGC($size,900,normal);}
+    @mixin ZeitungMicroGCBold($size){@include ZeitungMicroGC($size,700,normal);}
+    @mixin ZeitungMicroGCExtralight($size){@include ZeitungMicroGC($size,200,normal);}
+    @mixin ZeitungMicroGCRegular($size){@include ZeitungMicroGC($size,400,normal);}
+    @mixin ZeitungMicroGCSemibold($size){@include ZeitungMicroGC($size,600,normal);}
 
-        @font-face {
+    @font-face {
         font-family: 'Chivo';
         font-display:swap;        
-        src: url('../font/Chivo-Black.eot');
+        
         src: local('Chivo Black'), 
-                url('../font/Chivo-Black.eot?#iefix') format('embedded-opentype'),
                 url('../font/Chivo-Black.woff2') format('woff2'),
                 url('../font/Chivo-Black.woff') format('woff'),
-                url('../font/Chivo-Black.ttf') format('truetype'),
-                url('../font/Chivo-Black.svg#Chivo-Black') format('svg');
+                url('../font/Chivo-Black.ttf') format('truetype');
         font-weight: 900;
         font-style: normal;
     }
-        @font-face {
+    @font-face {
         font-family: 'Chivo';
         font-display:swap;        
-        src: url('../font/Chivo-BlackItalic.eot');
+        
         src: local('Chivo Black Italic'), 
-                url('../font/Chivo-BlackItalic.eot?#iefix') format('embedded-opentype'),
                 url('../font/Chivo-BlackItalic.woff2') format('woff2'),
                 url('../font/Chivo-BlackItalic.woff') format('woff'),
-                url('../font/Chivo-BlackItalic.ttf') format('truetype'),
-                url('../font/Chivo-BlackItalic.svg#Chivo-BlackItalic') format('svg');
+                url('../font/Chivo-BlackItalic.ttf') format('truetype');
         font-weight: 900;
         font-style: italic;
     }
-        @font-face {
+    @font-face {
         font-family: 'Chivo';
         font-display:swap;        
-        src: url('../font/Chivo-Bold.eot');
+        
         src: local('Chivo Bold'), 
-                url('../font/Chivo-Bold.eot?#iefix') format('embedded-opentype'),
                 url('../font/Chivo-Bold.woff2') format('woff2'),
                 url('../font/Chivo-Bold.woff') format('woff'),
-                url('../font/Chivo-Bold.ttf') format('truetype'),
-                url('../font/Chivo-Bold.svg#Chivo-Bold') format('svg');
+                url('../font/Chivo-Bold.ttf') format('truetype');
         font-weight: 700;
         font-style: normal;
     }
-        @font-face {
+    @font-face {
         font-family: 'Chivo';
         font-display:swap;        
-        src: url('../font/Chivo-BoldItalic.eot');
+        
         src: local('Chivo Bold Italic'), 
-                url('../font/Chivo-BoldItalic.eot?#iefix') format('embedded-opentype'),
                 url('../font/Chivo-BoldItalic.woff2') format('woff2'),
                 url('../font/Chivo-BoldItalic.woff') format('woff'),
-                url('../font/Chivo-BoldItalic.ttf') format('truetype'),
-                url('../font/Chivo-BoldItalic.svg#Chivo-BoldItalic') format('svg');
+                url('../font/Chivo-BoldItalic.ttf') format('truetype');
         font-weight: 700;
         font-style: italic;
     }
-        @font-face {
+    @font-face {
         font-family: 'Chivo';
         font-display:swap;        
-        src: url('../font/Chivo-Italic.eot');
+        
         src: local('Chivo Italic'), 
-                url('../font/Chivo-Italic.eot?#iefix') format('embedded-opentype'),
                 url('../font/Chivo-Italic.woff2') format('woff2'),
                 url('../font/Chivo-Italic.woff') format('woff'),
-                url('../font/Chivo-Italic.ttf') format('truetype'),
-                url('../font/Chivo-Italic.svg#Chivo-Italic') format('svg');
+                url('../font/Chivo-Italic.ttf') format('truetype');
         font-weight: 400;
         font-style: italic;
     }
-        @font-face {
+    @font-face {
         font-family: 'Chivo';
         font-display:swap;        
-        src: url('../font/Chivo-Light.eot');
+        
         src: local('Chivo Light'), 
-                url('../font/Chivo-Light.eot?#iefix') format('embedded-opentype'),
                 url('../font/Chivo-Light.woff2') format('woff2'),
                 url('../font/Chivo-Light.woff') format('woff'),
-                url('../font/Chivo-Light.ttf') format('truetype'),
-                url('../font/Chivo-Light.svg#Chivo-Light') format('svg');
+                url('../font/Chivo-Light.ttf') format('truetype');
         font-weight: 300;
         font-style: normal;
     }
-        @font-face {
+    @font-face {
         font-family: 'Chivo';
         font-display:swap;        
-        src: url('../font/Chivo-LightItalic.eot');
+        
         src: local('Chivo Light Italic'), 
-                url('../font/Chivo-LightItalic.eot?#iefix') format('embedded-opentype'),
                 url('../font/Chivo-LightItalic.woff2') format('woff2'),
                 url('../font/Chivo-LightItalic.woff') format('woff'),
-                url('../font/Chivo-LightItalic.ttf') format('truetype'),
-                url('../font/Chivo-LightItalic.svg#Chivo-LightItalic') format('svg');
+                url('../font/Chivo-LightItalic.ttf') format('truetype');
         font-weight: 300;
         font-style: italic;
     }
-        @font-face {
+    @font-face {
         font-family: 'Chivo';
         font-display:swap;        
-        src: url('../font/Chivo-Regular.eot');
+        
         src: local('Chivo Regular'), 
-                url('../font/Chivo-Regular.eot?#iefix') format('embedded-opentype'),
                 url('../font/Chivo-Regular.woff2') format('woff2'),
                 url('../font/Chivo-Regular.woff') format('woff'),
-                url('../font/Chivo-Regular.ttf') format('truetype'),
-                url('../font/Chivo-Regular.svg#Chivo-Regular') format('svg');
+                url('../font/Chivo-Regular.ttf') format('truetype');
         font-weight: 400;
         font-style: normal;
     }
-        @font-face {
+    @font-face {
         font-family: 'Zeitung Micro GC';
         font-display:swap;        
-        src: url('../font/ZeitungMicroGC-Black.eot');
+        
         src: local('Zeitung Micro GC Black'), 
-                url('../font/ZeitungMicroGC-Black.eot?#iefix') format('embedded-opentype'),
                 url('../font/ZeitungMicroGC-Black.woff2') format('woff2'),
                 url('../font/ZeitungMicroGC-Black.woff') format('woff'),
-                url('../font/ZeitungMicroGC-Black.ttf') format('truetype'),
-                url('../font/ZeitungMicroGC-Black.svg#ZeitungMicroGC-Black') format('svg');
+                url('../font/ZeitungMicroGC-Black.ttf') format('truetype');
         font-weight: 900;
         font-style: normal;
     }
-        @font-face {
+    @font-face {
         font-family: 'Zeitung Micro GC';
         font-display:swap;        
-        src: url('../font/ZeitungMicroGC-Bold.eot');
+        
         src: local('Zeitung Micro GC Bold'), 
-                url('../font/ZeitungMicroGC-Bold.eot?#iefix') format('embedded-opentype'),
                 url('../font/ZeitungMicroGC-Bold.woff2') format('woff2'),
                 url('../font/ZeitungMicroGC-Bold.woff') format('woff'),
-                url('../font/ZeitungMicroGC-Bold.ttf') format('truetype'),
-                url('../font/ZeitungMicroGC-Bold.svg#ZeitungMicroGC-Bold') format('svg');
+                url('../font/ZeitungMicroGC-Bold.ttf') format('truetype');
         font-weight: 700;
         font-style: normal;
     }
-        @font-face {
+    @font-face {
         font-family: 'Zeitung Micro GC';
         font-display:swap;        
-        src: url('../font/ZeitungMicroGC-Extralight.eot');
+        
         src: local('Zeitung Micro GC Extralight'), 
-                url('../font/ZeitungMicroGC-Extralight.eot?#iefix') format('embedded-opentype'),
                 url('../font/ZeitungMicroGC-Extralight.woff2') format('woff2'),
                 url('../font/ZeitungMicroGC-Extralight.woff') format('woff'),
-                url('../font/ZeitungMicroGC-Extralight.ttf') format('truetype'),
-                url('../font/ZeitungMicroGC-Extralight.svg#ZeitungMicroGC-Extralight') format('svg');
+                url('../font/ZeitungMicroGC-Extralight.ttf') format('truetype');
         font-weight: 200;
         font-style: normal;
     }
-        @font-face {
+    @font-face {
         font-family: 'Zeitung Micro GC';
         font-display:swap;        
-        src: url('../font/ZeitungMicroGC-Regular.eot');
+        
         src: local('Zeitung Micro GC'), 
-                url('../font/ZeitungMicroGC-Regular.eot?#iefix') format('embedded-opentype'),
                 url('../font/ZeitungMicroGC-Regular.woff2') format('woff2'),
                 url('../font/ZeitungMicroGC-Regular.woff') format('woff'),
-                url('../font/ZeitungMicroGC-Regular.ttf') format('truetype'),
-                url('../font/ZeitungMicroGC-Regular.svg#ZeitungMicroGC-Regular') format('svg');
+                url('../font/ZeitungMicroGC-Regular.ttf') format('truetype');
         font-weight: 400;
         font-style: normal;
     }
-        @font-face {
+    @font-face {
         font-family: 'Zeitung Micro GC';
         font-display:swap;        
-        src: url('../font/ZeitungMicroGC-Semibold.eot');
+        
         src: local('Zeitung Micro GC Semibold'), 
-                url('../font/ZeitungMicroGC-Semibold.eot?#iefix') format('embedded-opentype'),
                 url('../font/ZeitungMicroGC-Semibold.woff2') format('woff2'),
                 url('../font/ZeitungMicroGC-Semibold.woff') format('woff'),
-                url('../font/ZeitungMicroGC-Semibold.ttf') format('truetype'),
-                url('../font/ZeitungMicroGC-Semibold.svg#ZeitungMicroGC-Semibold') format('svg');
+                url('../font/ZeitungMicroGC-Semibold.ttf') format('truetype');
         font-weight: 600;
         font-style: normal;
     }
