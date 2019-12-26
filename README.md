@@ -5,11 +5,11 @@ npm i
 
 ## Usage
 
-For development mode.
+Development mode.
 ```bash
 npm run dev
 ```
-For production mode.
+Production mode.
 ```bash
 npm run prod
 ```
