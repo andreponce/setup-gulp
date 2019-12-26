@@ -1,15 +1,15 @@
 ## Installation
 ```bash
-npm i
+$ npm i
 ```
 
 ## Usage
 
 Development mode.
 ```bash
-npm run dev
+$ npm run dev
 ```
 Production mode.
 ```bash
-npm run prod
+$ npm run prod
 ```
