@@ -41,7 +41,6 @@
     "gulp-noop": "^1.0.0",
     "gulp-remove-html-comments": "^1.0.1",
     "gulp-sass": "^4.0.2",
-    "gulp-sitemap": "^7.6.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-tinypng-extended": "^2.0.2",
     "gulp-uglify": "^3.0.2",

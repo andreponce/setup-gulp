@@ -50,6 +50,12 @@ const HTML_SOURCE_FILES = [
         compress: true,
         sync: true,
         dest: `${BUILD_DIR}`
+    },
+    {
+        dir: `${SRC_DIR}`,
+        files: [`sitemap.xml`],
+        compress: true,
+        dest: `${BUILD_DIR}`
     }
 ];
 
@@ -209,8 +215,7 @@ const { src, dest, watch, series, parallel, task } = require('gulp'),
     browserify = require("browserify"),
     //babelify = require("babelify"),
     source = require("vinyl-source-stream"),
-    buffer = require("vinyl-buffer"),
-    sitemap = require('gulp-sitemap');
+    buffer = require("vinyl-buffer");
 
 const isProduction = process.env.NODE_ENV == 'production';
 var updateAssetsAfterChange = false;
@@ -541,7 +546,7 @@ function updateFontSass(done) {
 
         if (!fontface) return;
 
-        formats = formats ? formats : ['eot','woff2','woff','ttf','svg'];
+        formats = formats ? formats : ['eot', 'woff2', 'woff', 'ttf', 'svg'];
 
         let fontFiles = [];
         files.forEach(function (path, index) {
@@ -656,20 +661,20 @@ function updateFontSass(done) {
     return null;
 }
 
-function processFiles(obj){
+function processFiles(obj) {
     obj.ignore = !obj.sync;
 
     logProcess(obj);
 
     let source = src(obj.files, { cwd: obj.dir, allowEmpty: true });
     source.pipe(dest(obj.dest))
-        return source;
+    return source;
 }
 
 function processAnotherFiles(done) {
     let sources = [];
     ANOTHER_FILES.forEach(function (obj, index) {
-        if (!obj.ignore) sources.push({func:processFiles,params:obj});
+        if (!obj.ignore) sources.push({ func: processFiles, params: obj });
     });
     runSeries(sources, done);
 }
@@ -681,7 +686,7 @@ function processBrowserSync(done) {
         logLevel: VERBOSE ? "info" : "silent",
         notify: true
     };
-    if(PROXY && PROXY!='') config.proxy = PROXY;
+    if (PROXY && PROXY != '') config.proxy = PROXY;
     else {
         config.server = {
             baseDir: BUILD_DIR
@@ -690,19 +695,19 @@ function processBrowserSync(done) {
     browsersync.init(config, done)
 }
 
-function clear(done){
+function clear(done) {
     let paths;
-    if(isProduction){
+    if (isProduction) {
         paths = [`${BUILD_DIR}`];
-    }else{
+    } else {
         paths = [
             `${BUILD_DIR}/*`,
             `!${BUILD_DIR}/${BUILD_CSS_DIR}`,
             `!${BUILD_DIR}/${BUILD_JS_DIR}`,
             `!${BUILD_DIR}/${BUILD_FONT_DIR}`,
             `!${BUILD_DIR}/${BUILD_IMG_DIR}`,
-            `${BUILD_DIR}/${BUILD_CSS_DIR}/*`, 
-            `${BUILD_DIR}/${BUILD_JS_DIR}/*`, 
+            `${BUILD_DIR}/${BUILD_CSS_DIR}/*`,
+            `${BUILD_DIR}/${BUILD_JS_DIR}/*`,
             `${BUILD_DIR}/*.${PAGES_EXTENSION}`,
         ];
     }
@@ -727,7 +732,20 @@ task('dev', (done) => {
     watch([`${SRC_ASSETS_DIR}/**/*.{ttf,otf,woff,woff2,ttc,dfont}`], parallel(processFonts));
     watch([`${SRC_ASSETS_DIR}/**/*.{png,jpg,jpeg,gif,svg}`], parallel(processImages));
 
-    series(clear,processFonts, processImages, processStyles, processScripts, processPages, processAnotherFiles, processBrowserSync)();
+    series(clear,
+        processFonts,
+        processImages,
+        processStyles,
+        processScripts,
+        processPages,
+        processAnotherFiles,
+        processBrowserSync)();
 });
 
-task('build', series([clear,processFonts, processImages, processStyles, processScripts, processPages, processAnotherFiles]));
+task('build', series([
+    clear, processFonts,
+    processImages,
+    processStyles,
+    processScripts,
+    processPages,
+    processAnotherFiles]));
