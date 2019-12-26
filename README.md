@@ -1,3 +1,8 @@
+## Installation
+```bash
+npm i
+```
+
 ## Usage
 
 For development mode.
