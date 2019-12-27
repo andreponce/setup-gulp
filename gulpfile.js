@@ -452,7 +452,10 @@ function processImages(done) {
 
     if (!isProduction) updateAssetsAfterChange = true;
 
-    if (sources.length > 0) runSeries(sources, done);
+    if (sources.length > 0) runSeries(sources, function(){
+        browsersync.reload();
+        done();
+    });
     else done();
 }
 
