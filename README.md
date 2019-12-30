@@ -4,7 +4,7 @@ $ npm i
 ```
 
 ## Usage
-
+Just edit the config.js file, you don't have to restart gulp, it will update your changes automatically.
 Development mode.
 ```bash
 $ npm run dev
