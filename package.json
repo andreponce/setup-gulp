@@ -7,7 +7,7 @@
     "build": "gulp build",
     "dev": "gulp dev",
     "prod": "cross-env NODE_ENV=production gulp build",
-    "prod:serve": "cross-env NODE_ENV=production gulp build:serve"
+    "prod:serve": "cross-env NODE_ENV=production gulp dev"
   },
   "repository": {
     "type": "git",

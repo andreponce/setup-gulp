@@ -581,11 +581,10 @@ task('dev', (done) => {
 });
 
 task('build', series([
-    clear, processFonts,
+    clear, 
+    processFonts,
     processImages,
     processStyles,
     processScripts,
     processPages,
     processAnotherFiles]));
-
-task('build:serve', series(['build', processBrowserSync]));
