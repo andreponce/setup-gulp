@@ -1,193 +1,7 @@
-//general
-const VERBOSE = true;
-const PAGES_EXTENSION = '{html,php}';
-const AUTO_PREFIXER_TARGET = 'last 2 version';
-const TINYPNG_API_KEY = "bWvx20WuCilC1gVmmeVXwXAAHI7Wy7D5";
-const PROXY = '';
-
-//Source directories
-const SRC_DIR = 'src';
-const SRC_SCSS_DIR = `${SRC_DIR}/scss`;
-const SRC_JS_DIR = `${SRC_DIR}/js`;
-const SRC_ASSETS_DIR = `${SRC_DIR}/assets`;
-const SRC_FONT_DIR = `${SRC_ASSETS_DIR}/font`;
-const SRC_IMG_DIR = `${SRC_ASSETS_DIR}/img`;
-
-//Build directories
-const BUILD_DIR = 'build';
-const BUILD_CSS_DIR = `css`;
-const BUILD_JS_DIR = `js`;
-const BUILD_IMG_DIR = `img`;
-const BUILD_FONT_DIR = `font`;
-const BUILD_MAPS_DIR = `maps`;
-
-//css files
-const CSS_SOURCE_FILES = [
-    {
-        dir: SRC_SCSS_DIR,
-        files: ['essential.scss', 'nonessential.scss'],
-        sass: true,
-        maps: true,
-        prefixer: true,
-        compress: true,
-        sync: true,
-        dest: `${BUILD_DIR}/${BUILD_CSS_DIR}`
-    },
-    /*{
-        dir: './node_modules/bootstrap/dist/css',
-        files: ['bootstrap-grid.min.css', 'bootstrap-reboot.min.css', 'bootstrap.min.css'],
-        concat: 'bootstrap.css',
-        compress: true,
-        dest: `${BUILD_DIR}/${BUILD_CSS_DIR}/libs`
-    }*/
-];
-
-//pages files
-const HTML_SOURCE_FILES = [
-    {
-        dir: `${SRC_DIR}/**`,
-        files: [`*.${PAGES_EXTENSION}`],
-        compress: true,
-        sync: true,
-        dest: `${BUILD_DIR}`
-    },
-    {
-        dir: `${SRC_DIR}`,
-        files: [`sitemap.xml`],
-        compress: true,
-        dest: `${BUILD_DIR}`
-    }
-];
-
-//js files
-const JS_SOURCE_FILES = [
-    {
-        dir: SRC_JS_DIR,
-        files: ['main.js'],
-        transpile: true,//transpile es6 to es5
-        compress: true,
-        sync: true,
-        dest: `${BUILD_DIR}/${BUILD_JS_DIR}`
-    },
-    /*{
-        dir: 'node_modules',
-        files: ['bootstrap/dist/js/*.js', 'jquery/dist/jquery.min.js'],
-        concat: 'libs.js',
-        compress: true,
-        dest: `${BUILD_DIR}/${BUILD_JS_DIR}`
-    }*/
-];
-
-//images files
-const IMAGE_SOURCE_FILES = [
-    {
-        dir: SRC_IMG_DIR,
-        files: ['*'],
-        original: true, //move original format when webp:true
-        compress: true, //needs original:true
-        webp: false,
-        sync: true,
-        dest: `${BUILD_DIR}/${BUILD_IMG_DIR}`
-    },
-    /*{
-        dir: 'node_modules/bootstrap-3-typeahead',
-        files: ['typeaheadv4.png'],
-        original: true,
-        compress: true,
-        webp: true,
-        dest: `${BUILD_DIR}/${BUILD_IMG_DIR}`
-    }*/
-];
-
-//font files
-const FONT_SOURCE_FILES = [
-    {
-        dir: SRC_FONT_DIR,
-        files: ['*'],
-        convert: true,
-        fontface: true, //auto generate @fontface css
-        formats: ['woff2', 'woff', 'ttf'], //default ['eot','woff2','woff','ttf','svg']
-        characters: '0123456789AaÀàÁáÂâÃãÄäBbCcÇçDdÈèÉéÊêËëFfGgHhÌìÍíÎîÏïJjKkLlMmNnÑñOoÒòÓóÔôÕõÖöPpQqRrSsTtÙùÚúÛûÜüVvWwXxÝýŸÿZz!@#$%ˆ&*()_+{}":?><`-=[];\'/.,\\|~©®ª°º±«»¿×÷',
-        sync: true,
-        dest: `${BUILD_DIR}/${BUILD_FONT_DIR}`
-    },
-    /*{
-        dir: '/Users/andreponce/Desktop/font',
-        files: ['BrandonGrotesque-Black.ttf'],
-        convert: true,
-        fontface: true,
-        formats: ['woff2'],
-        dest: `${BUILD_DIR}/${BUILD_FONT_DIR}`
-    }*/
-];
-
-//move another files
-const ANOTHER_FILES = [
-    {
-        dir: SRC_DIR,
-        files: ['.htaccess'],
-        dest: BUILD_DIR
-    }
-];
-
-//values for Inject
-const MUSTACHES = {
-    locale: 'pt-br',
-    gtm: '<!-- insert google tag manager here -->',//google tag manager
-    title: 'setup-gulp-title',
-    description: 'setup-gulp-description',
-    author: 'André Ponce',
-    keywords: 'key1,key2',
-    name: 'Site Name',
-    url: 'http://www.andreponce.com',
-    themeColor: '#ffffff',
-    facebook: {
-        image: './img/facebook.png',
-        type: 'website',
-        width: 1200,
-        height: 600
-    },
-    twitter: {
-        card: 'summary_large_image',
-        image: './img/twitter.png',
-    },
-    android: {
-        icon: './img/android-chrome-192x192.png',
-    },
-    ios: {
-        icon: './img/apple-touch-icon.png',
-        style: 'black'
-    },
-    win: {
-        icon: './img/mstile-150x150.png',
-        color: '#000000'
-    },
-    favicon: {
-        ios180: '/img/apple-touch-icon.png',
-        png32: './img/favicon-32x32.png',
-        png16: './img/favicon-16x16.png'
-    },
-    essentialStyles: '<link rel="stylesheet" href="./css/essential.css">',
-    mainScript: '<script src="./js/main.js"></script>',
-    fontFaceTemplate: `@font-face {
-        font-family: '{{{fontFamily}}}';
-        font-display:swap;        
-        {{{eotSrc}}}
-        src: local('{{{fullFontName}}}'), 
-            {{#types}}
-                url('{{{fontPath}}}') format('{{{fontFormat}}}'){{separator}}
-            {{/types}}
-        font-weight: {{{fontWeight}}};
-        font-style: {{{fontStyle}}};
-    }`,
-    fontFamilyFuncTemplate: `@mixin {{{fontFamilyFunction}}}($size,$weight,$style){font-family: '{{{fontFamily}}}',Arial,Verdana,Sans-Serif;font-weight: $weight;font-style: $style;font-size: $size;}`,
-    fontFuncTemplate: `@mixin {{{fontFunction}}}($size){@include {{{fontFamilyFunction}}}($size,{{{fontWeight}}},{{{fontStyle}}});}`,
-    scannedFonts: ''
-};
-//END
-
 //dependences
-const { src, dest, watch, series, parallel, task } = require('gulp'),
+var CONF = require('./config.js');
+const reload = require('require-reload')(require),
+    { src, dest, watch, series, parallel, task } = require('gulp'),
     through = require('through2'),
     chalk = require('chalk'),
     log = require('fancy-log'),
@@ -212,6 +26,7 @@ const { src, dest, watch, series, parallel, task } = require('gulp'),
     fontkit = require('fontkit'),
     fs = require('fs'),
     browsersync = require("browser-sync").create(),
+    autoClose = require('browser-sync-close-hook'),
     browserify = require("browserify"),
     //babelify = require("babelify"),
     source = require("vinyl-source-stream"),
@@ -239,7 +54,7 @@ function runSeries(sources, done) {
 }
 
 function logProcess(obj) {
-    if (VERBOSE) log(chalk`Processing '{magenta ${obj.dir}}' + '{magenta ${obj.files}}'` + (obj.concat ? chalk` to '{magenta ${obj.concat}}'` : '') + chalk` => '{magenta ${obj.dest}}'`);
+    if (CONF.VERBOSE) log(chalk`Processing '{magenta ${obj.dir}}' + '{magenta ${obj.files}}'` + (obj.concat ? chalk` to '{magenta ${obj.concat}}'` : '') + chalk` => '{magenta ${obj.dest}}'`);
 }
 
 function processStyle(obj) {
@@ -267,9 +82,9 @@ function processStyle(obj) {
             errLogToConsole: true,
             //outputStyle: isProduction ? 'compressed' : 'expanded'
         }) : noop())
-        .pipe(_prefixer ? autoprefixer(AUTO_PREFIXER_TARGET) : noop())
+        .pipe(_prefixer ? autoprefixer(CONF.AUTO_PREFIXER_TARGET) : noop())
         .pipe(_compressBool ? cssnano({ discardComments: { removeAll: true } }) : noop())
-        .pipe((_maps && !isProduction) ? sourcemaps.write(`${BUILD_MAPS_DIR}`) : noop())
+        .pipe((_maps && !isProduction) ? sourcemaps.write(`${CONF.BUILD_MAPS_DIR}`) : noop())
         .pipe(dest(_dest))
         .pipe(_sync ? browsersync.stream() : noop());
     return source;
@@ -280,17 +95,17 @@ function processStyles(done) {
 
     sources.push({
         func: function () {
-            if (fs.existsSync(`${SRC_SCSS_DIR}/font.mustache.scss`)) {
-                var mustach = src([`${SRC_SCSS_DIR}/font.mustache.scss`])
-                    .pipe(mustache(MUSTACHES))
+            if (fs.existsSync(`${CONF.SRC_SCSS_DIR}/font.mustache.scss`)) {
+                var mustach = src([`${CONF.SRC_SCSS_DIR}/font.mustache.scss`])
+                    .pipe(mustache(CONF.MUSTACHES))
                     .pipe(concat('font.scss'))
-                    .pipe(dest(SRC_SCSS_DIR));
+                    .pipe(dest(CONF.SRC_SCSS_DIR));
                 return mustach;
             }
             return null;
         }
     });
-    CSS_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.CSS_SOURCE_FILES.forEach(function (obj, index) {
         if (!obj.ignore) sources.push({ func: processStyle, params: obj });
     });
     runSeries(sources, done);
@@ -337,7 +152,7 @@ function processScript(obj) {
 
 function processScripts(done) {
     let sources = [];
-    JS_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.JS_SOURCE_FILES.forEach(function (obj, index) {
         if (!obj.ignore) sources.push({ func: processScript, params: obj });
     });
     runSeries(sources, done);
@@ -356,7 +171,7 @@ function processPage(obj) {
 
     let production = (isProduction && _compress);
     let source = src(_files, { cwd: _dir, allowEmpty: true })
-    source.pipe(mustache(MUSTACHES))
+    source.pipe(mustache(CONF.MUSTACHES))
         .pipe(production ? removeHtmlComments() : noop())
         .pipe(production ? minifyInline() : noop())
         .pipe(production ? htmlmin({ collapseWhitespace: true }) : noop())
@@ -367,7 +182,7 @@ function processPage(obj) {
 
 function processPages(done) {
     let sources = [];
-    HTML_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.HTML_SOURCE_FILES.forEach(function (obj, index) {
         if (!obj.ignore) sources.push({ func: processPage, params: obj });
     });
     runSeries(sources, done);
@@ -377,17 +192,17 @@ function tinyImages(obj) {
     var tiny = src(obj.files.concat('!**/*.{svg,gif}'), { cwd: obj.dir, allowEmpty: true })
         .pipe(plumber())
         .pipe(tinypng({
-            key: TINYPNG_API_KEY,
+            key: CONF.TINYPNG_API_KEY,
             sigFile: `${obj.dir}/.tinypng-sigs`,
             force: true,
-            log: VERBOSE
+            log: CONF.VERBOSE
         }))
         .pipe(dest(obj.dest));
     return tiny;
 }
 
 function offlineImagesCompress(obj) {
-    var imageCompress = src(TINYPNG_API_KEY ? obj.files.concat('!**/*.{png,jpg,jpeg}') : obj.files, { cwd: obj.dir, allowEmpty: true })
+    var imageCompress = src(CONF.TINYPNG_API_KEY ? obj.files.concat('!**/*.{png,jpg,jpeg}') : obj.files, { cwd: obj.dir, allowEmpty: true })
         .pipe(image({
             optipng: ['-i 1', '-strip all', '-fix', '-o7', '-force'],
             pngquant: ['--speed=1', '--force', 256],
@@ -397,7 +212,7 @@ function offlineImagesCompress(obj) {
             guetzli: ['--quality', 85],
             gifsicle: ['--optimize'],
             svgo: ['--enable', 'cleanupIDs', '--disable', 'convertColors'],
-            quiet: !VERBOSE
+            quiet: !CONF.VERBOSE
         }))
         .pipe(dest(obj.dest));
     return imageCompress;
@@ -418,7 +233,7 @@ function imagesToWebp(obj) {
 
 function processImages(done) {
     let sources = [];
-    IMAGE_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.IMAGE_SOURCE_FILES.forEach(function (obj, index) {
         if (!obj.ignore) {
             let _files = obj.files;
             let _compress = obj.compress;
@@ -434,7 +249,7 @@ function processImages(done) {
             if (isProduction || !fs.existsSync(_dest) || updateAssetsAfterChange) {
                 if (_original) {
                     if (_compress && isProduction) {
-                        if (TINYPNG_API_KEY) {
+                        if (CONF.TINYPNG_API_KEY) {
                             sources.push({ func: tinyImages, params: obj });
                         }
                         sources.push({ func: offlineImagesCompress, params: obj });
@@ -452,7 +267,7 @@ function processImages(done) {
 
     if (!isProduction) updateAssetsAfterChange = true;
 
-    if (sources.length > 0) runSeries(sources, function(){
+    if (sources.length > 0) runSeries(sources, function () {
         browsersync.reload();
         done();
     });
@@ -463,7 +278,7 @@ function processFont(obj) {
     var fonts = src(obj.files, { cwd: obj.dir, allowEmpty: true })
         .pipe(fontmin({
             text: obj.characters,
-            verbose: VERBOSE
+            verbose: CONF.VERBOSE
         }))
         .pipe(dest(obj.dest))
     fonts.pipe(through.obj(function (file, enc, cb) {
@@ -483,7 +298,7 @@ function moveFonts(obj) {
 
 function processFonts(done) {
     let sources = [];
-    FONT_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.FONT_SOURCE_FILES.forEach(function (obj, index) {
         if (!obj.ignore) {
             let _convert = obj.convert;
             let _sync = obj.sync;
@@ -515,7 +330,7 @@ function processFonts(done) {
 }
 
 function updateFontSass(done) {
-    if (!fs.existsSync(`${SRC_SCSS_DIR}/font.mustache.scss`)) return null;
+    if (!fs.existsSync(`${CONF.SRC_SCSS_DIR}/font.mustache.scss`)) return null;
 
     let fontStyles = ['normal', 'italic', 'oblique'];
     let fontWeights = {
@@ -541,7 +356,7 @@ function updateFontSass(done) {
     var fontFunctions = [];
     var dicFontFamilyFuncs = {};
 
-    FONT_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.FONT_SOURCE_FILES.forEach(function (obj, index) {
         let dir = obj.dir;
         let files = obj.files;
         let fontface = obj.fontface;
@@ -611,7 +426,7 @@ function updateFontSass(done) {
                         format = extension;
                         break;
                 }
-                types.push({ fontPath: `../${BUILD_FONT_DIR}/${fileName}.${extension}${hash}`, fontFormat: format, separator: index < formats.length - 1 ? ',' : ';' });
+                types.push({ fontPath: `../${CONF.BUILD_FONT_DIR}/${fileName}.${extension}${hash}`, fontFormat: format, separator: index < formats.length - 1 ? ',' : ';' });
             });
 
             let fontData = {
@@ -621,17 +436,17 @@ function updateFontSass(done) {
                 fontFunction: fontFunction,
                 fontWeight: fontWeight,
                 fontStyle: fontStyle,
-                eotSrc: (formats.indexOf('eot') > -1 ? `src: url('../${BUILD_FONT_DIR}/${fileName}.eot');` : ''),
+                eotSrc: (formats.indexOf('eot') > -1 ? `src: url('../${CONF.BUILD_FONT_DIR}/${fileName}.eot');` : ''),
                 types: types
             }
 
-            var fontFace = mustache.mustache.render(MUSTACHES.fontFaceTemplate, fontData);
+            var fontFace = mustache.mustache.render(CONF.MUSTACHES.fontFaceTemplate, fontData);
 
             fonts.push({ fontFace: fontFace });
-            fontFunctions.push({ func: mustache.mustache.render(MUSTACHES.fontFuncTemplate, fontData) });
+            fontFunctions.push({ func: mustache.mustache.render(CONF.MUSTACHES.fontFuncTemplate, fontData) });
             if (!dicFontFamilyFuncs[fontFamilyFunction]) {
                 dicFontFamilyFuncs[fontFamilyFunction] = true;
-                fontFamilyFunctions.push({ func: mustache.mustache.render(MUSTACHES.fontFamilyFuncTemplate, fontData) });
+                fontFamilyFunctions.push({ func: mustache.mustache.render(CONF.MUSTACHES.fontFamilyFuncTemplate, fontData) });
             }
         });
     });
@@ -650,14 +465,14 @@ function updateFontSass(done) {
 
     var scannedFonts = mustache.mustache.render(eachFonts, { fonts: fonts, fontFunctions: fontFunctions, fontFamilyFunctions: fontFamilyFunctions })
 
-    MUSTACHES.scannedFonts = scannedFonts;
+    CONF.MUSTACHES.scannedFonts = scannedFonts;
 
-    src([`${SRC_SCSS_DIR}/font.mustache.scss`])
-        .pipe(mustache(MUSTACHES))
+    src([`${CONF.SRC_SCSS_DIR}/font.mustache.scss`])
+        .pipe(mustache(CONF.MUSTACHES))
         .pipe(concat('font.scss'))
-        .pipe(dest(SRC_SCSS_DIR));
+        .pipe(dest(CONF.SRC_SCSS_DIR));
 
-    if (VERBOSE) log(chalk`Generated {green @Fontface} '{magenta ${SRC_SCSS_DIR}/font.scss}'`);
+    if (CONF.VERBOSE) log(chalk`Generated {green @Fontface} '{magenta ${CONF.SRC_SCSS_DIR}/font.scss}'`);
 
     if (done) done();
 
@@ -676,7 +491,7 @@ function processFiles(obj) {
 
 function processAnotherFiles(done) {
     let sources = [];
-    ANOTHER_FILES.forEach(function (obj, index) {
+    CONF.ANOTHER_FILES.forEach(function (obj, index) {
         if (!obj.ignore) sources.push({ func: processFiles, params: obj });
     });
     runSeries(sources, done);
@@ -686,36 +501,55 @@ function processBrowserSync(done) {
     let config = {
         watchEvents: ["add", "change", 'unlink'],
         logConnections: true,
-        logLevel: VERBOSE ? "info" : "silent",
-        notify: true
+        logLevel: CONF.VERBOSE ? "info" : "silent",
+        notify: true,
+
     };
-    if (PROXY && PROXY != '') config.proxy = PROXY;
+    if (CONF.PROXY && CONF.PROXY != '') config.proxy = CONF.PROXY;
     else {
         config.server = {
-            baseDir: BUILD_DIR
+            baseDir: CONF.BUILD_DIR
         };
     }
+    browsersync.use({
+        plugin() { },
+        hooks: {
+            'client:js': CONF.AUTO_CLOSE_TAB_ON_DISCONNECT ? autoClose : '',
+        },
+    });
     browsersync.init(config, done)
 }
 
 function clear(done) {
     let paths;
     if (isProduction) {
-        paths = [`${BUILD_DIR}`];
+        paths = [`${CONF.BUILD_DIR}`];
     } else {
         paths = [
-            `${BUILD_DIR}/*`,
-            `!${BUILD_DIR}/${BUILD_CSS_DIR}`,
-            `!${BUILD_DIR}/${BUILD_JS_DIR}`,
-            `!${BUILD_DIR}/${BUILD_FONT_DIR}`,
-            `!${BUILD_DIR}/${BUILD_IMG_DIR}`,
-            `${BUILD_DIR}/${BUILD_CSS_DIR}/*`,
-            `${BUILD_DIR}/${BUILD_JS_DIR}/*`,
-            `${BUILD_DIR}/*.${PAGES_EXTENSION}`,
+            `${CONF.BUILD_DIR}/*`,
+            `!${CONF.BUILD_DIR}/${CONF.BUILD_CSS_DIR}`,
+            `!${CONF.BUILD_DIR}/${CONF.BUILD_JS_DIR}`,
+            `!${CONF.BUILD_DIR}/${CONF.BUILD_FONT_DIR}`,
+            `!${CONF.BUILD_DIR}/${CONF.BUILD_IMG_DIR}`,
+            `${CONF.BUILD_DIR}/${CONF.BUILD_CSS_DIR}/*`,
+            `${CONF.BUILD_DIR}/${CONF.BUILD_JS_DIR}/*`,
+            `${CONF.BUILD_DIR}/*.${CONF.PAGES_EXTENSION}`,
         ];
     }
     del.sync(paths);
     done();
+}
+
+function configUpdated(done) {
+    CONF = reload('./config.js');
+    updateAssetsAfterChange = false;
+    series(clear,
+        processFonts,
+        processImages,
+        processStyles,
+        processScripts,
+        processPages,
+        processAnotherFiles)(done);
 }
 
 log(chalk`{${isProduction ? 'red.bold' : 'blue.bold'} runnin in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} MODE...}`);
@@ -726,14 +560,15 @@ if (!isProduction) {
 }
 
 task('dev', (done) => {
-    let cssFiles = [`${SRC_SCSS_DIR}/**/*.{scss,sass}`];
-    if (fs.existsSync(`${SRC_SCSS_DIR}/font.mustache.scss`)) cssFiles.push(`!${SRC_SCSS_DIR}/font.scss`);
+    let cssFiles = [`${CONF.SRC_SCSS_DIR}/**/*.{scss,sass}`];
+    if (fs.existsSync(`${CONF.SRC_SCSS_DIR}/font.mustache.scss`)) cssFiles.push(`!${CONF.SRC_SCSS_DIR}/font.scss`);
 
     watch(cssFiles, parallel(processStyles));
-    watch([`${SRC_JS_DIR}/**/*.js`], parallel(processScripts));
-    watch([`${SRC_DIR}/**/*.${PAGES_EXTENSION}`], parallel(processPages));
-    watch([`${SRC_ASSETS_DIR}/**/*.{ttf,otf,woff,woff2,ttc,dfont}`], parallel(processFonts));
-    watch([`${SRC_ASSETS_DIR}/**/*.{png,jpg,jpeg,gif,svg}`], parallel(processImages));
+    watch([`${CONF.SRC_JS_DIR}/**/*.js`], parallel(processScripts));
+    watch([`${CONF.SRC_DIR}/**/*.${CONF.PAGES_EXTENSION}`], parallel(processPages));
+    watch([`${CONF.SRC_ASSETS_DIR}/**/*.{ttf,otf,woff,woff2,ttc,dfont}`], parallel(processFonts));
+    watch([`${CONF.SRC_ASSETS_DIR}/**/*.{png,jpg,jpeg,gif,svg}`], parallel(processImages));
+    watch([`./config.js`], parallel(configUpdated));
 
     series(clear,
         processFonts,
@@ -752,3 +587,5 @@ task('build', series([
     processScripts,
     processPages,
     processAnotherFiles]));
+
+task('build:serve', series(['build', processBrowserSync]));

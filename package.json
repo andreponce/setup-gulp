@@ -6,7 +6,8 @@
   "scripts": {
     "build": "gulp build",
     "dev": "gulp dev",
-    "prod": "cross-env NODE_ENV=production gulp build"
+    "prod": "cross-env NODE_ENV=production gulp build",
+    "prod:serve": "cross-env NODE_ENV=production gulp build:serve"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "@babel/core": "^7.7.5",
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.7",
+    "browser-sync-close-hook": "^1.0.5",
     "browserify": "^16.5.0",
     "chalk": "^3.0.0",
     "cross-env": "^6.0.3",
@@ -45,6 +47,7 @@
     "gulp-tinypng-extended": "^2.0.2",
     "gulp-uglify": "^3.0.2",
     "gulp-webp": "^4.0.1",
+    "require-reload": "^0.2.2",
     "through2": "^3.0.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"

@@ -13,3 +13,7 @@ Production mode.
 ```bash
 $ npm run prod
 ```
+Production mode and run server.
+```bash
+$ npm run prod:serve
+```
