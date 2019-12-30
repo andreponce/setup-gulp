@@ -128,7 +128,12 @@ const ANOTHER_FILES = [
         dir: SRC_DIR,
         files: ['.htaccess'],
         dest: BUILD_DIR
-    }
+    },
+    /*{
+        dir:'./your base folder',
+        files: ['you cas move an entire folder'],
+        dest: 'target folder'
+    }*/
 ];
 
 //values for Inject
