@@ -21,6 +21,7 @@
   "homepage": "https://github.com/andreponce/setup-gulp#readme",
   "devDependencies": {
     "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.7",
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.7",
     "browser-sync-close-hook": "^1.0.5",

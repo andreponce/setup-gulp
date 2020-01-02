@@ -1,3 +1,5 @@
-export default function(){
-    console.log("external module");
+export default class Module {
+    constructor() {
+        console.log("external module");
+    }
 }

@@ -1,9 +1,9 @@
-import module from "./module";
+import Module from "./module";
 import $ from "jquery";
 
 var test = "Started!";
 console.log(test);
-module()
+new Module();
 
 var link = $('<link rel="stylesheet" href="./css/nonessential.css">');
 link.on('load',function(){

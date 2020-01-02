@@ -30,7 +30,7 @@ const reload = require('require-reload')(require),
     autoClose = require('browser-sync-close-hook'),
     browserify = require("browserify"),
     //babelify = require("babelify"),
-    source = require("vinyl-source-stream"),
+    vinyl = require("vinyl-source-stream"),
     buffer = require("vinyl-buffer");
 
 const isProduction = process.env.NODE_ENV == 'production';
@@ -134,11 +134,12 @@ function processScript(obj) {
             ],
             debug: !isProduction
         })
+            .transform("babelify"/*, { presets: ["@babel/preset-env"] }*/)
             .bundle();
-        bundle.pipe(source(_concat ? _concat : 'main.js'))
+        bundle.pipe(vinyl(_concat ? _concat : 'main.js'))
             .pipe(buffer())
             .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
-            .pipe(isProduction ? uglify() : noop())            
+            .pipe(isProduction ? uglify() : noop())
             .pipe(dest(_dest)).pipe(browsersync.stream());
         return bundle
     } else {
@@ -585,7 +586,7 @@ task('dev', (done) => {
 });
 
 task('build', series([
-    clear, 
+    clear,
     processFonts,
     processImages,
     processStyles,
