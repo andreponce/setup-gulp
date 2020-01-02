@@ -11,6 +11,7 @@ const reload = require('require-reload')(require),
     mustache = require('gulp-mustache'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
+    stripDebug = require('gulp-strip-debug'),
     htmlmin = require('gulp-htmlmin'),
     sass = require('gulp-sass'),
     cssnano = require('gulp-cssnano'),
@@ -136,13 +137,15 @@ function processScript(obj) {
             .bundle();
         bundle.pipe(source(_concat ? _concat : 'main.js'))
             .pipe(buffer())
-            .pipe(isProduction ? uglify() : noop())
+            .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
+            .pipe(isProduction ? uglify() : noop())            
             .pipe(dest(_dest)).pipe(browsersync.stream());
         return bundle
     } else {
         let source = src(_files, { cwd: _dir, allowEmpty: true });
         source.pipe(plumber())
             .pipe(_concat ? concat(_concat) : noop())
+            .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
             .pipe((isProduction && _compress) ? uglify() : noop())
             .pipe(dest(_dest))
             .pipe(_sync ? browsersync.stream() : noop());
