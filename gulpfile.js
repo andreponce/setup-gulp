@@ -506,6 +506,7 @@ function processBrowserSync(done) {
         logConnections: true,
         logLevel: CONF.VERBOSE ? "info" : "silent",
         notify: true,
+        port: CONF.PORT
 
     };
     if (CONF.PROXY && CONF.PROXY != '') config.proxy = CONF.PROXY;
