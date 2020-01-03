@@ -582,7 +582,7 @@ task('dev', (done) => {
         processScripts,
         processPages,
         processAnotherFiles,
-        processBrowserSync)();
+        processBrowserSync)(done);
 });
 
 task('build', series([
