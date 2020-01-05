@@ -173,7 +173,8 @@ const MUSTACHES = {
     favicon: {
         ios180: '/img/apple-touch-icon.png',
         png32: './img/favicon-32x32.png',
-        png16: './img/favicon-16x16.png'
+        png16: './img/favicon-16x16.png',
+        ico: './img/favicon.ico'
     },
     essentialStyles: '<link rel="stylesheet" href="./css/essential.css">',
     mainScript: '<script src="./js/main.js"></script>',
