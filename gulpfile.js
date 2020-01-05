@@ -572,7 +572,7 @@ task('dev', (done) => {
     watch([`${CONF.SRC_JS_DIR}/**/*.js`], parallel(processScripts));
     watch([`${CONF.SRC_DIR}/**/*.${CONF.PAGES_EXTENSION}`], parallel(processPages));
     watch([`${CONF.SRC_ASSETS_DIR}/**/*.{ttf,otf,woff,woff2,ttc,dfont}`], parallel(processFonts));
-    watch([`${CONF.SRC_ASSETS_DIR}/**/*.{png,jpg,jpeg,gif,svg}`], parallel(processImages));
+    watch([`${CONF.SRC_ASSETS_DIR}/**/*.{png,jpg,jpeg,gif,svg,ico}`], parallel(processImages));
     watch([`./config.js`], parallel(configUpdated));
 
     series(clear,
