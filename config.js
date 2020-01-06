@@ -141,7 +141,8 @@ const ANOTHER_FILES = [
 //values for Inject
 const MUSTACHES = {
     locale: 'pt-br',
-    gtm: '<!-- insert google tag manager here -->',//google tag manager
+    gtmHead: '<!-- insert google tag manager here -->',//google tag manager
+    gtmBody: '<!-- insert google tag manager here -->',//google tag manager
     title: 'setup-gulp-title',
     description: 'setup-gulp-description',
     author: 'André Ponce',
