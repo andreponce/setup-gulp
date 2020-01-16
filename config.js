@@ -177,8 +177,8 @@ const MUSTACHES = {
         png16: './img/favicon-16x16.png',
         ico: './img/favicon.ico'
     },
-    essentialStyles: '<link rel="stylesheet" href="./css/essential.css">',
-    mainScript: '<script src="./js/main.js"></script>',
+    essentialStyles: '<link rel="stylesheet" href="./css/essential.cssv=1">',
+    mainScript: '<script src="./js/main.jsv=1"></script>',
     fontFaceTemplate: `@font-face {
         font-family: '{{{fontFamily}}}';
         font-display:swap;        
