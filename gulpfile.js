@@ -383,7 +383,7 @@ function updateFontSass(done) {
             var values = font.postscriptName.split('-');
             var fullFontName = font.fullName.split('-').join(' ');
             var fontFunction = fullFontName.split(' ').join('');
-            var props = values[1].split(/(?=[A-Z][a-z])/);
+            var props = values[1] ? values[1].split(/(?=[A-Z][a-z])/) : font.fullName.split(" ").filter((item) => ['Bold','Italic',].includes(item));
             var fontFamily = (fullFontName.split(" ").filter((item) => !props.includes(item))).join(' ');
             var fontFamilyFunction = fontFamily.replace(/\s+/g, '')
             var fontWeight, fontStyle;
