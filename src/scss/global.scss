@@ -4,7 +4,18 @@
 .hide{
     display: none!important;
 }
-.only-mobile{display: none;}
+.only-mobile{
+    display: none;
+    @include mobile{
+        display: inherit!important;
+    }
+}
+.only-tablet{
+    display: none!important;
+    @include tablet{
+        display: inherit!important;
+    }
+}
 .disable{
     pointer-events:none!important;
     cursor:default!important;

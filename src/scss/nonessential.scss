@@ -1,5 +1,12 @@
+@import "variables";
+@import "function";
+@import "global";
 @import "font";
 .test{
     @include ChivoRegular(14px);
     background: greenyellow;
+}
+h1{
+    @include ZeitungMicroGCBlack(20px);
+    background: yellow;
 }

@@ -1,7 +1,4 @@
 @import "reset";
-@import "function";
-@import "variables";
-@import "font";
 
 html{
     font-size: 16px;
@@ -22,9 +19,4 @@ body{
 }
 .hide{
     display: none!important;
-}
-
-h1{
-    @include ZeitungMicroGCBlack(20px);
-    background: yellow;
 }
