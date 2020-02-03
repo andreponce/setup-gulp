@@ -20,9 +20,10 @@ a{
     color: inherit;
 }
 figure{margin:0;}
-img{
+img,svg,figure{
     -webkit-user-drag: none;
     width: 100%;
+    user-select: none;
 }
 video{
     overflow: hidden;
