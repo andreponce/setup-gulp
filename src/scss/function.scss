@@ -31,7 +31,9 @@ $easeInOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 };
 
 @mixin transition($time:.3s, $props: all, $ease: $easeOutQuad){
-    transition: $time $props $ease;
+	transition-duration: $time;
+	transition-property: $props;
+	transition-timing-function: $easeOutQuad;
 }
 
 @mixin mobile {
