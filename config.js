@@ -110,7 +110,7 @@ const FONT_SOURCE_FILES = [
         convert: true,
         fontface: true, //auto generate @fontface css
         formats: ['woff2', 'woff', 'ttf'], //default ['eot','woff2','woff','ttf','svg']
-        characters: '0123456789AaÀàÁáÂâÃãÄäBbCcÇçDdÈèÉéÊêËëFfGgHhÌìÍíÎîÏïJjKkLlMmNnÑñOoÒòÓóÔôÕõÖöPpQqRrSsTtÙùÚúÛûÜüVvWwXxÝýŸÿZz!@#$%ˆ&*()_+{}":?><`-=[];\'/.,\\|~©®ª°º±«»¿×÷',
+        characters: '0123456789AaÀàÁáÂâÃãÄäBbCcÇçDdEeÈèÉéÊêËëFfGgHhIiÌìÍíÎîÏïJjKkLlMmNnÑñOoÒòÓóÔôÕõÖöPpQqRrSsTtUuÙùÚúÛûÜüVvWwXxÝýŸÿZz!@#$%ˆ&*()_+{}":?><`-=[];\'/.,\\|~©®ª°º±«»¿×÷',
         sync: true,
         dest: `${BUILD_DIR}/${BUILD_FONT_DIR}`
     },
