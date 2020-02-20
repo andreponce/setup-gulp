@@ -230,7 +230,8 @@ function moveImages(obj) {
 
 function imagesToWebp(obj) {
     var webpImages = src(obj.files.concat('!**/*.{svg,gif}'), { cwd: obj.dir, allowEmpty: true })
-        .pipe(webp())
+        .pipe(webp({quality: 85,
+            method: 5}))
         .pipe(dest(obj.dest));
     return webpImages;
 }
