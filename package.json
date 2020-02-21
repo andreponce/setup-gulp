@@ -48,6 +48,7 @@
     "gulp-strip-debug": "^3.0.0",
     "gulp-tinypng-extended": "^2.0.2",
     "gulp-uglify": "^3.0.2",
+    "gulp-uglify-es": "^2.0.0",
     "gulp-webp": "^4.0.1",
     "require-reload": "^0.2.2",
     "through2": "^3.0.1",

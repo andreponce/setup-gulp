@@ -11,6 +11,7 @@ const reload = require('require-reload')(require),
     mustache = require('gulp-mustache'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
+    uglify_default = require('gulp-uglify-es').default,
     stripDebug = require('gulp-strip-debug'),
     htmlmin = require('gulp-htmlmin'),
     sass = require('gulp-sass'),
@@ -139,15 +140,16 @@ function processScript(obj) {
         bundle.pipe(vinyl(_concat ? _concat : 'main.js'))
             .pipe(buffer())
             .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
-            .pipe(isProduction ? uglify() : noop())
-            .pipe(dest(_dest)).pipe(browsersync.stream());
+            pipe((isProduction && _compress) ? uglify() : noop())
+            .pipe(dest(_dest))
+            .pipe(_sync ? browsersync.stream() : noop());
         return bundle
     } else {
         let source = src(_files, { cwd: _dir, allowEmpty: true });
         source.pipe(plumber())
             .pipe(_concat ? concat(_concat) : noop())
             .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
-            .pipe((isProduction && _compress) ? uglify() : noop())
+            .pipe((isProduction && _compress) ? uglify_default() : noop())
             .pipe(dest(_dest))
             .pipe(_sync ? browsersync.stream() : noop());
         return source;
@@ -251,9 +253,9 @@ function processImages(done) {
 
             logProcess(obj);
 
-            if (isProduction || !fs.existsSync(_dest) || updateAssetsAfterChange) {
+            if (/*isProduction ||*/ !fs.existsSync(_dest) || updateAssetsAfterChange) {
                 if (_original) {
-                    if (_compress && isProduction) {
+                    if (_compress /*&& isProduction*/) {
                         if (CONF.TINYPNG_API_KEY) {
                             sources.push({ func: tinyImages, params: obj });
                         }
@@ -313,7 +315,7 @@ function processFonts(done) {
 
             logProcess(obj);
 
-            if (isProduction || !fs.existsSync(_dest) || updateAssetsAfterChange) {
+            if (/*isProduction ||*/ !fs.existsSync(_dest) || updateAssetsAfterChange) {
                 if (_convert) {
                     sources.push({
                         func: processFont,
@@ -528,9 +530,9 @@ function processBrowserSync(done) {
 
 function clear(done) {
     let paths;
-    if (isProduction) {
+    /*if (isProduction) {
         paths = [`${CONF.BUILD_DIR}`];
-    } else {
+    } else {*/
         paths = [
             `${CONF.BUILD_DIR}/*`,
             `!${CONF.BUILD_DIR}/${CONF.BUILD_CSS_DIR}`,
@@ -541,7 +543,7 @@ function clear(done) {
             `${CONF.BUILD_DIR}/${CONF.BUILD_JS_DIR}/*`,
             `${CONF.BUILD_DIR}/*.${CONF.PAGES_EXTENSION}`,
         ];
-    }
+    //}
     del.sync(paths);
     done();
 }
