@@ -140,7 +140,7 @@ function processScript(obj) {
         bundle.pipe(vinyl(_concat ? _concat : 'main.js'))
             .pipe(buffer())
             .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
-            pipe((isProduction && _compress) ? uglify() : noop())
+            .pipe((isProduction && _compress) ? uglify() : noop())
             .pipe(dest(_dest))
             .pipe(_sync ? browsersync.stream() : noop());
         return bundle
