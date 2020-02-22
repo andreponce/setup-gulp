@@ -268,7 +268,7 @@ function processImages(done) {
                 if (_webp) {
                     sources.push({ func: imagesToWebp, params: obj });
                 }
-            }
+            }else log(chalk`{yellow.bold Skipping images build.\n For rebuild images delete folder in the build folder and run build command again.}`);
         }
     });
 
@@ -327,7 +327,7 @@ function processFonts(done) {
                         params: obj
                     });
                 }
-            }
+            }else log(chalk`{yellow.bold Skipping fonts build.\n For rebuild fonts delete folder in the build folder and run build command again.}`);
         }
     });
     if (sources.length > 0) runSeries(sources, function () {
