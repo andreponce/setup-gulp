@@ -255,7 +255,7 @@ function processImages(done) {
 
             if (/*isProduction ||*/ !fs.existsSync(_dest) || updateAssetsAfterChange) {
                 if (_original) {
-                    if (_compress /*&& isProduction*/) {
+                    if (_compress && isProduction) {
                         if (CONF.TINYPNG_API_KEY) {
                             sources.push({ func: tinyImages, params: obj });
                         }
