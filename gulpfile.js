@@ -40,6 +40,7 @@ var updateAssetsAfterChange = false;
 // functions
 function runSeries(sources, done) {
     var runned = 0;
+
     function next() {
         var obj = sources[runned];
         runned++;
@@ -49,14 +50,13 @@ function runSeries(sources, done) {
             var src = func(params);
             if (src) src.on('end', next);
             else next();
-        }
-        else done();
+        } else done();
     }
     next();
 }
 
 function logProcess(obj) {
-    if (CONF.VERBOSE) log(chalk`Processing '{magenta ${obj.dir}}' + '{magenta ${obj.files}}'` + (obj.concat ? chalk` to '{magenta ${obj.concat}}'` : '') + chalk` => '{magenta ${obj.dest}}'`);
+    if (CONF.VERBOSE) log(chalk `Processing '{magenta ${obj.dir}}' + '{magenta ${obj.files}}'` + (obj.concat ? chalk ` to '{magenta ${obj.concat}}'` : '') + chalk ` => '{magenta ${obj.dest}}'`);
 }
 
 function processStyle(obj) {
@@ -96,7 +96,7 @@ function processStyles(done) {
     let sources = [];
 
     sources.push({
-        func: function () {
+        func: function() {
             if (fs.existsSync(`${CONF.SRC_SCSS_DIR}/font.mustache.scss`)) {
                 var mustach = src([`${CONF.SRC_SCSS_DIR}/font.mustache.scss`])
                     .pipe(mustache(CONF.MUSTACHES))
@@ -107,7 +107,7 @@ function processStyles(done) {
             return null;
         }
     });
-    CONF.CSS_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.CSS_SOURCE_FILES.forEach(function(obj, index) {
         if (!obj.ignore) sources.push({ func: processStyle, params: obj });
     });
     runSeries(sources, done);
@@ -128,14 +128,14 @@ function processScript(obj) {
 
     if (_transpile) {
         let bundle = browserify({
-            basedir: _dir,
-            entries: _files,
-            plugin: [
-                [require('esmify'), {}]
-            ],
-            debug: !isProduction
-        })
-            .transform("babelify"/*, { presets: ["@babel/preset-env"] }*/)
+                basedir: _dir,
+                entries: _files,
+                plugin: [
+                    [require('esmify'), {}]
+                ],
+                debug: !isProduction
+            })
+            .transform("babelify" /*, { presets: ["@babel/preset-env"] }*/ )
             .bundle();
         bundle.pipe(vinyl(_concat ? _concat : 'main.js'))
             .pipe(buffer())
@@ -158,7 +158,7 @@ function processScript(obj) {
 
 function processScripts(done) {
     let sources = [];
-    CONF.JS_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.JS_SOURCE_FILES.forEach(function(obj, index) {
         if (!obj.ignore) sources.push({ func: processScript, params: obj });
     });
     runSeries(sources, done);
@@ -188,7 +188,7 @@ function processPage(obj) {
 
 function processPages(done) {
     let sources = [];
-    CONF.HTML_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.HTML_SOURCE_FILES.forEach(function(obj, index) {
         if (!obj.ignore) sources.push({ func: processPage, params: obj });
     });
     runSeries(sources, done);
@@ -232,15 +232,17 @@ function moveImages(obj) {
 
 function imagesToWebp(obj) {
     var webpImages = src(obj.files.concat('!**/*.{svg,gif}'), { cwd: obj.dir, allowEmpty: true })
-        .pipe(webp({quality: 85,
-            method: 5}))
+        .pipe(webp({
+            quality: 85,
+            method: 5
+        }))
         .pipe(dest(obj.dest));
     return webpImages;
 }
 
 function processImages(done) {
     let sources = [];
-    CONF.IMAGE_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.IMAGE_SOURCE_FILES.forEach(function(obj, index) {
         if (!obj.ignore) {
             let _files = obj.files;
             let _compress = obj.compress;
@@ -253,7 +255,7 @@ function processImages(done) {
 
             logProcess(obj);
 
-            if (/*isProduction ||*/ !fs.existsSync(_dest) || updateAssetsAfterChange) {
+            if ( /*isProduction ||*/ !fs.existsSync(_dest) || updateAssetsAfterChange) {
                 if (_original) {
                     if (_compress && isProduction) {
                         if (CONF.TINYPNG_API_KEY) {
@@ -268,13 +270,13 @@ function processImages(done) {
                 if (_webp) {
                     sources.push({ func: imagesToWebp, params: obj });
                 }
-            }else log(chalk`{yellow.bold Skipping images build.\n For rebuild images delete folder in the build folder and run build command again.}`);
+            } else log(chalk `{yellow.bold Skipping images build.\n For rebuild images delete folder in the build folder and run build command again.}`);
         }
     });
 
     if (!isProduction) updateAssetsAfterChange = true;
 
-    if (sources.length > 0) runSeries(sources, function () {
+    if (sources.length > 0) runSeries(sources, function() {
         browsersync.reload();
         done();
     });
@@ -288,7 +290,7 @@ function processFont(obj) {
             verbose: CONF.VERBOSE
         }))
         .pipe(dest(obj.dest))
-    fonts.pipe(through.obj(function (file, enc, cb) {
+    fonts.pipe(through.obj(function(file, enc, cb) {
         let path = file.path;
         let ext = path.split('.').pop();
         if (obj.formats.indexOf(ext) < 0) del.sync(path);
@@ -305,7 +307,7 @@ function moveFonts(obj) {
 
 function processFonts(done) {
     let sources = [];
-    CONF.FONT_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.FONT_SOURCE_FILES.forEach(function(obj, index) {
         if (!obj.ignore) {
             let _convert = obj.convert;
             let _sync = obj.sync;
@@ -315,7 +317,7 @@ function processFonts(done) {
 
             logProcess(obj);
 
-            if (/*isProduction ||*/ !fs.existsSync(_dest) || updateAssetsAfterChange) {
+            if ( /*isProduction ||*/ !fs.existsSync(_dest) || updateAssetsAfterChange) {
                 if (_convert) {
                     sources.push({
                         func: processFont,
@@ -327,10 +329,10 @@ function processFonts(done) {
                         params: obj
                     });
                 }
-            }else log(chalk`{yellow.bold Skipping fonts build.\n For rebuild fonts delete folder in the build folder and run build command again.}`);
+            } else log(chalk `{yellow.bold Skipping fonts build.\n For rebuild fonts delete folder in the build folder and run build command again.}`);
         }
     });
-    if (sources.length > 0) runSeries(sources, function () {
+    if (sources.length > 0) runSeries(sources, function() {
         updateFontSass(done);
     });
     else updateFontSass(done);
@@ -363,7 +365,7 @@ function updateFontSass(done) {
     var fontFunctions = [];
     var dicFontFamilyFuncs = {};
 
-    CONF.FONT_SOURCE_FILES.forEach(function (obj, index) {
+    CONF.FONT_SOURCE_FILES.forEach(function(obj, index) {
         let dir = obj.dir;
         let files = obj.files;
         let fontface = obj.fontface;
@@ -374,11 +376,11 @@ function updateFontSass(done) {
         formats = formats ? formats : ['eot', 'woff2', 'woff', 'ttf', 'svg'];
 
         let fontFiles = [];
-        files.forEach(function (path, index) {
+        files.forEach(function(path, index) {
             fontFiles = fontFiles.concat(glob.sync(`${dir}/${path}`));
         });
 
-        fontFiles.forEach(function (path, index) {
+        fontFiles.forEach(function(path, index) {
             var font = fontkit.openSync(path);
             var dotIndex = path.lastIndexOf('.');
             var fileName = path.substring(path.lastIndexOf('/') + 1, dotIndex);
@@ -386,7 +388,7 @@ function updateFontSass(done) {
             var values = font.postscriptName.split('-');
             var fullFontName = font.fullName.split('-').join(' ');
             var fontFunction = fullFontName.split(' ').join('');
-            var props = values[1] ? values[1].split(/(?=[A-Z][a-z])/) : font.fullName.split(" ").filter((item) => ['Bold','Italic',].includes(item));
+            var props = values[1] ? values[1].split(/(?=[A-Z][a-z])/) : font.fullName.split(" ").filter((item) => ['Bold', 'Italic', ].includes(item));
             var fontFamily = (fullFontName.split(" ").filter((item) => !props.includes(item))).join(' ');
             var fontFamilyFunction = fontFamily.replace(/\s+/g, '')
             var fontWeight, fontStyle;
@@ -397,7 +399,7 @@ function updateFontSass(done) {
             //console.log(font.postscriptName);
             //console.log(font.fullName);
             //console.log('fullFontName:', fullFontName);
-            props.forEach(function (prop, index) {
+            props.forEach(function(prop, index) {
                 prop = prop.toLowerCase();
                 fontStyle = fontStyle ? fontStyle : fontStyles[fontStyles.indexOf(prop)];
                 fontWeight = fontWeight ? fontWeight : fontWeights[prop];
@@ -414,7 +416,7 @@ function updateFontSass(done) {
             console.log('fontStyle:', fontStyle);*/
 
             let types = [];
-            formats.forEach(function (extension, index) {
+            formats.forEach(function(extension, index) {
                 var format;
                 var hash = '';
                 switch (extension) {
@@ -479,7 +481,7 @@ function updateFontSass(done) {
         .pipe(concat('font.scss'))
         .pipe(dest(CONF.SRC_SCSS_DIR));
 
-    if (CONF.VERBOSE) log(chalk`Generated {green @Fontface} '{magenta ${CONF.SRC_SCSS_DIR}/font.scss}'`);
+    if (CONF.VERBOSE) log(chalk `Generated {green @Fontface} '{magenta ${CONF.SRC_SCSS_DIR}/font.scss}'`);
 
     if (done) done();
 
@@ -487,18 +489,22 @@ function updateFontSass(done) {
 }
 
 function processFiles(obj) {
-    obj.ignore = !obj.sync;
+    let _sync = obj.sync;
+
+    obj.ignore = !_sync;
 
     logProcess(obj);
 
     let source = src(obj.files, { cwd: obj.dir, allowEmpty: true });
-    source.pipe(dest(obj.dest))
+    source.pipe(plumber())
+        .pipe(dest(obj.dest))
+        .pipe(_sync ? browsersync.stream() : noop());
     return source;
 }
 
 function processAnotherFiles(done) {
     let sources = [];
-    CONF.ANOTHER_FILES.forEach(function (obj, index) {
+    CONF.ANOTHER_FILES.forEach(function(obj, index) {
         if (!obj.ignore) sources.push({ func: processFiles, params: obj });
     });
     runSeries(sources, done);
@@ -520,7 +526,7 @@ function processBrowserSync(done) {
         };
     }
     browsersync.use({
-        plugin() { },
+        plugin() {},
         hooks: {
             'client:js': CONF.AUTO_CLOSE_TAB_ON_DISCONNECT ? autoClose : '',
         },
@@ -533,16 +539,16 @@ function clear(done) {
     /*if (isProduction) {
         paths = [`${CONF.BUILD_DIR}`];
     } else {*/
-        paths = [
-            `${CONF.BUILD_DIR}/*`,
-            `!${CONF.BUILD_DIR}/${CONF.BUILD_CSS_DIR}`,
-            `!${CONF.BUILD_DIR}/${CONF.BUILD_JS_DIR}`,
-            `!${CONF.BUILD_DIR}/${CONF.BUILD_FONT_DIR}`,
-            `!${CONF.BUILD_DIR}/${CONF.BUILD_IMG_DIR}`,
-            `${CONF.BUILD_DIR}/${CONF.BUILD_CSS_DIR}/*`,
-            `${CONF.BUILD_DIR}/${CONF.BUILD_JS_DIR}/*`,
-            `${CONF.BUILD_DIR}/*.${CONF.PAGES_EXTENSION}`,
-        ];
+    paths = [
+        `${CONF.BUILD_DIR}/*`,
+        `!${CONF.BUILD_DIR}/${CONF.BUILD_CSS_DIR}`,
+        `!${CONF.BUILD_DIR}/${CONF.BUILD_JS_DIR}`,
+        `!${CONF.BUILD_DIR}/${CONF.BUILD_FONT_DIR}`,
+        `!${CONF.BUILD_DIR}/${CONF.BUILD_IMG_DIR}`,
+        `${CONF.BUILD_DIR}/${CONF.BUILD_CSS_DIR}/*`,
+        `${CONF.BUILD_DIR}/${CONF.BUILD_JS_DIR}/*`,
+        `${CONF.BUILD_DIR}/*.${CONF.PAGES_EXTENSION}`,
+    ];
     //}
     del.sync(paths);
     done();
@@ -560,11 +566,11 @@ function configUpdated(done) {
         processAnotherFiles)(done);
 }
 
-log(chalk`{${isProduction ? 'red.bold' : 'blue.bold'} runnin in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} MODE...}`);
+log(chalk `{${isProduction ? 'red.bold' : 'blue.bold'} runnin in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} MODE...}`);
 if (!isProduction) {
-    log(chalk`{yellow.bold For rebuild images/fonts folders delete them in the build folder and run build command again.}`);
-    log(chalk`{yellow.bold Images/css/js compression will only work in Production Mode.}`);
-    log(chalk`{yellow.bold After deleting files in the src folder run the build command again to clear up the built files.}`);
+    log(chalk `{yellow.bold For rebuild images/fonts folders delete them in the build folder and run build command again.}`);
+    log(chalk `{yellow.bold Images/css/js compression will only work in Production Mode.}`);
+    log(chalk `{yellow.bold After deleting files in the src folder run the build command again to clear up the built files.}`);
 }
 
 task('dev', (done) => {
@@ -576,6 +582,7 @@ task('dev', (done) => {
     watch([`${CONF.SRC_DIR}/**/*.${CONF.PAGES_EXTENSION}`], parallel(processPages));
     watch([`${CONF.SRC_ASSETS_DIR}/**/*.{ttf,otf,woff,woff2,ttc,dfont}`], parallel(processFonts));
     watch([`${CONF.SRC_ASSETS_DIR}/**/*.{png,jpg,jpeg,gif,svg,ico}`], parallel(processImages));
+    watch([`${CONF.SRC_DIR}/**/*.{json,xml,htaccess}`], parallel(processAnotherFiles));
     watch([`./config.js`], parallel(configUpdated));
 
     series(clear,
@@ -595,4 +602,5 @@ task('build', series([
     processStyles,
     processScripts,
     processPages,
-    processAnotherFiles]));
+    processAnotherFiles
+]));
