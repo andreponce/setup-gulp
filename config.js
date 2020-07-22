@@ -25,8 +25,7 @@ const BUILD_FONT_DIR = `font`;
 const BUILD_MAPS_DIR = `maps`;
 
 //css files
-const CSS_SOURCE_FILES = [
-    {
+const CSS_SOURCE_FILES = [{
         dir: SRC_SCSS_DIR,
         files: ['essential.scss', 'nonessential.scss'],
         sass: true,
@@ -46,8 +45,7 @@ const CSS_SOURCE_FILES = [
 ];
 
 //pages files
-const HTML_SOURCE_FILES = [
-    {
+const HTML_SOURCE_FILES = [{
         dir: `${SRC_DIR}/**`,
         files: [`*.${PAGES_EXTENSION}`],
         compress: true,
@@ -63,11 +61,10 @@ const HTML_SOURCE_FILES = [
 ];
 
 //js files
-const JS_SOURCE_FILES = [
-    {
+const JS_SOURCE_FILES = [{
         dir: SRC_JS_DIR,
         files: ['main.js'],
-        transpile: true,//transpile es6 to es5
+        transpile: true, //transpile es6 to es5
         compress: true,
         sync: true,
         dest: `${BUILD_DIR}/${BUILD_JS_DIR}`
@@ -82,8 +79,7 @@ const JS_SOURCE_FILES = [
 ];
 
 //images files
-const IMAGE_SOURCE_FILES = [
-    {
+const IMAGE_SOURCE_FILES = [{
         dir: SRC_IMG_DIR,
         files: ['*'],
         original: true, //move original format when webp:true
@@ -103,14 +99,13 @@ const IMAGE_SOURCE_FILES = [
 ];
 
 //font files
-const FONT_SOURCE_FILES = [
-    {
+const FONT_SOURCE_FILES = [{
         dir: SRC_FONT_DIR,
         files: ['*'],
         convert: true,
         fontface: true, //auto generate @fontface css
         formats: ['woff2', 'woff', 'ttf'], //default ['eot','woff2','woff','ttf','svg']
-        characters: '0123456789AaÀàÁáÂâÃãÄäBbCcÇçDdEeÈèÉéÊêËëFfGgHhIiÌìÍíÎîÏïJjKkLlMmNnÑñOoÒòÓóÔôÕõÖöPpQqRrSsTtUuÙùÚúÛûÜüVvWwXxÝýŸÿZz!@#$%ˆ&*()_+{}":?><`-=[];\'/.,\\|~©®ª°º±«»¿×÷',
+        characters: '0123456789AaÀàÁáÂâÃãÄäBbCcÇçDdEeÈèÉéÊêËëFfGgHhIiÌìÍíÎîÏïJjKkLlMmNnÑñOoÒòÓóÔôÕõÖöPpQqRrSsTtUuÙùÚúÛûÜüVvWwXxyYÝýŸÿZz!@#$%ˆ&*()_+{}":?><`-=[];\'/.,\\|~©®ª°º±«»¿×÷“',
         sync: true,
         dest: `${BUILD_DIR}/${BUILD_FONT_DIR}`
     },
@@ -125,8 +120,7 @@ const FONT_SOURCE_FILES = [
 ];
 
 //move another files
-const ANOTHER_FILES = [
-    {
+const ANOTHER_FILES = [{
         dir: SRC_DIR,
         files: ['.htaccess'],
         dest: BUILD_DIR
@@ -141,8 +135,8 @@ const ANOTHER_FILES = [
 //values for Inject
 const MUSTACHES = {
     locale: 'pt-br',
-    gtmHead: '<!-- insert google tag manager here -->',//google tag manager
-    gtmBody: '<!-- insert google tag manager here -->',//google tag manager
+    gtmHead: '<!-- insert google tag manager here -->', //google tag manager
+    gtmBody: '<!-- insert google tag manager here -->', //google tag manager
     title: 'setup-gulp-title',
     description: 'setup-gulp-description',
     author: 'André Ponce',
@@ -197,4 +191,4 @@ const MUSTACHES = {
 //END
 
 //export variables
-module.exports={VERBOSE,PAGES_EXTENSION,AUTO_PREFIXER_TARGET,TINYPNG_API_KEY,PROXY,PORT,SRC_DIR,SRC_SCSS_DIR,SRC_JS_DIR,SRC_ASSETS_DIR,SRC_FONT_DIR,SRC_IMG_DIR,BUILD_DIR,BUILD_CSS_DIR,BUILD_JS_DIR,BUILD_IMG_DIR,BUILD_FONT_DIR,BUILD_MAPS_DIR,CSS_SOURCE_FILES,HTML_SOURCE_FILES,JS_SOURCE_FILES,IMAGE_SOURCE_FILES,FONT_SOURCE_FILES,ANOTHER_FILES,MUSTACHES,AUTO_CLOSE_TAB_ON_DISCONNECT,STRIP_DEBUG}
+module.exports = { VERBOSE, PAGES_EXTENSION, AUTO_PREFIXER_TARGET, TINYPNG_API_KEY, PROXY, PORT, SRC_DIR, SRC_SCSS_DIR, SRC_JS_DIR, SRC_ASSETS_DIR, SRC_FONT_DIR, SRC_IMG_DIR, BUILD_DIR, BUILD_CSS_DIR, BUILD_JS_DIR, BUILD_IMG_DIR, BUILD_FONT_DIR, BUILD_MAPS_DIR, CSS_SOURCE_FILES, HTML_SOURCE_FILES, JS_SOURCE_FILES, IMAGE_SOURCE_FILES, FONT_SOURCE_FILES, ANOTHER_FILES, MUSTACHES, AUTO_CLOSE_TAB_ON_DISCONNECT, STRIP_DEBUG }
