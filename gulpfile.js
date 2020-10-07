@@ -85,7 +85,7 @@ function processStyle(obj) {
             //outputStyle: isProduction ? 'compressed' : 'expanded'
         }) : noop())
         .pipe(_prefixer ? autoprefixer(CONF.AUTO_PREFIXER_TARGET) : noop())
-        .pipe(_compressBool ? cssnano({ discardComments: { removeAll: true } }) : noop())
+        .pipe(_compressBool ? cssnano({ discardComments: { removeAll: true }, zindex: false }) : noop())
         .pipe((_maps && !isProduction) ? sourcemaps.write(`${CONF.BUILD_MAPS_DIR}`) : noop())
         .pipe(dest(_dest))
         .pipe(_sync ? browsersync.stream() : noop());
