@@ -30,7 +30,8 @@ const reload = require('require-reload')(require),
     browsersync = require("browser-sync").create(),
     autoClose = require('browser-sync-close-hook'),
     browserify = require("browserify"),
-    //babelify = require("babelify"),
+    // babelify = require("babelify"),
+    // classProperties = require("@babel/plugin-proposal-class-properties"),
     vinyl = require("vinyl-source-stream"),
     buffer = require("vinyl-buffer");
 
@@ -135,12 +136,13 @@ function processScript(obj) {
                 ],
                 debug: !isProduction
             })
-            .transform("babelify" /*, { presets: ["@babel/preset-env"] }*/ )
+            .plugin('tinyify')
+            .transform("babelify" /*{ compact: false , presets: ["es2015"] }*/ )
             .bundle();
         bundle.pipe(vinyl(_concat ? _concat : 'main.js'))
             .pipe(buffer())
             .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
-            .pipe((isProduction && _compress) ? uglify() : noop())
+            .pipe((isProduction && _compress) ? uglify_default() : noop())
             .pipe(dest(_dest))
             .pipe(_sync ? browsersync.stream() : noop());
         return bundle

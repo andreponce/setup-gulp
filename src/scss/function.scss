@@ -3,113 +3,114 @@
 //$easeInOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
 $easeOutQuad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 $easeInOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-
-@mixin pseudo($display: block, $pos: absolute, $content: ''){
+@mixin pseudo($display: block, $pos: absolute, $content: "") {
     content: $content;
     display: $display;
     position: $pos;
 }
 
-@mixin responsive-ratio($x,$y, $pseudo: false) {
-    $padding: unquote( ( $y / $x ) * 100 + '%' );
+@mixin responsive-ratio($x, $y, $pseudo: false) {
+    $padding: unquote(($y / $x) * 100 + "%");
     @if $pseudo {
         &:before {
             @include pseudo($pos: relative);
             width: 100%;
             padding-top: $padding;
         }
-    } @else {
+    }
+    @else {
         padding-top: $padding;
     }
 }
 
-@mixin flex($justify:flex-start,$align:flex-start,$direction:row){
+@mixin flex($justify: flex-start, $align: flex-start, $direction: row) {
     display: flex;
     justify-content: $justify;
     align-items: $align;
     flex-direction: $direction;
-};
+}
 
-@mixin transition($time:.3s, $props: all, $ease: $easeOutQuad){
-	transition-duration: $time;
-	transition-property: $props;
-	transition-timing-function: $easeOutQuad;
+@mixin transition($time: 0.3s, $props: all, $ease: $easeOutQuad, $delay: 0s) {
+    transition-duration: $time;
+    transition-property: $props;
+    transition-timing-function: $easeOutQuad;
+    transition-delay: $delay;
 }
 
 @mixin mobile {
-	@media (max-width: 599px) {
-		@content;
-	}
+    @media (max-width: 599px) {
+        @content;
+    }
 }
 
 @mixin no-mobile {
-	@media (min-width: 600px) {
-		@content;
-	}
+    @media (min-width: 600px) {
+        @content;
+    }
 }
 
 @mixin tablet {
-	@media  (max-width: 1024px) {
-		@content;
-	}
+    @media (max-width: 1024px) {
+        @content;
+    }
 }
 
 @mixin only-tablet {
-	@media  (min-width: 600px) and (max-width: 1024px) {
-		@content;
-	}
+    @media (min-width: 600px) and (max-width: 1024px) {
+        @content;
+    }
 }
 
 @mixin desktop {
-	@media  (min-width: 1025px) {
-		@content;
-	}
+    @media (min-width: 1025px) {
+        @content;
+    }
 }
 
 @mixin x1600 {
-	@media  (max-width: 1600px) {
-		@content;
-	}
+    @media (max-width: 1600px) {
+        @content;
+    }
 }
 
 @mixin x1440 {
-	@media  (max-width: 1440px) {
-		@content;
-	}
+    @media (max-width: 1440px) {
+        @content;
+    }
 }
 
 @mixin x1380 {
-	@media  (max-width: 1380px) {
-		@content;
-	}
+    @media (max-width: 1380px) {
+        @content;
+    }
 }
 
 @mixin x1024 {
-	@media  (max-width: 1024px) {
-		@content;
-	}
+    @media (max-width: 1024px) {
+        @content;
+    }
 }
 
 @mixin x1023 {
-	@media  (max-width: 1023px) {
-		@content;
-	}
+    @media (max-width: 1023px) {
+        @content;
+    }
 }
 
 @mixin x900 {
-	@media  (max-width: 900px) {
-		@content;
-	}
+    @media (max-width: 900px) {
+        @content;
+    }
 }
 
 @mixin x768 {
-	@media  (max-width: 768px) {
-		@content;
-	}
+    @media (max-width: 768px) {
+        @content;
+    }
 }
 
 @mixin x650 {
-	@media  (max-width: 650px) {
-		@content;
-	}
+    @media (max-width: 650px) {
+        @content;
+    }
 }
