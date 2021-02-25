@@ -67,6 +67,12 @@ $easeInOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     }
 }
 
+@mixin retina {
+    @media (min-width: 1801px) {
+        @content;
+    }
+}
+
 @mixin x1600 {
     @media (max-width: 1600px) {
         @content;
