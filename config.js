@@ -81,7 +81,7 @@ const JS_SOURCE_FILES = [{
 //images files
 const IMAGE_SOURCE_FILES = [{
         dir: SRC_IMG_DIR,
-        files: ['*'],
+        files: ['**/*'],
         original: true, //move original format when webp:true
         compress: true, //needs original:true
         webp: false,
