@@ -44,12 +44,12 @@ figure {
     display: inline-flex;
 }
 
-img, svg, figure {
+img, object, svg, figure {
     -webkit-user-drag: none;
     width: 100%;
 }
 
-img, svg {
+img, object, svg {
     user-select: none;
 }
 
