@@ -4,9 +4,10 @@ const STRIP_DEBUG = true; //if true remove console.log, alert, etc in production
 const PAGES_EXTENSION = '{html,php}';
 const AUTO_PREFIXER_TARGET = 'last 2 version';
 const TINYPNG_API_KEY = "bWvx20WuCilC1gVmmeVXwXAAHI7Wy7D5";
+const HOST = '192.168.0.101';
 const PROXY = '';
 const PORT = 3000;
-const AUTO_CLOSE_TAB_ON_DISCONNECT = true; //for browsersync
+const AUTO_CLOSE_TAB_ON_DISCONNECT = false; //for browsersync
 
 //Source directories
 const SRC_DIR = 'src';
@@ -33,6 +34,7 @@ const CSS_SOURCE_FILES = [{
         prefixer: true,
         compress: true,
         sync: true,
+        hash: false,
         dest: `${BUILD_DIR}/${BUILD_CSS_DIR}`
     },
     /*{
@@ -67,6 +69,7 @@ const JS_SOURCE_FILES = [{
         transpile: true, //transpile es6 to es5
         compress: true,
         sync: true,
+        hash: false,
         dest: `${BUILD_DIR}/${BUILD_JS_DIR}`
     },
     /*{
@@ -86,6 +89,7 @@ const IMAGE_SOURCE_FILES = [{
         compress: true, //needs original:true
         webp: false,
         sync: true,
+        hash: false,
         dest: `${BUILD_DIR}/${BUILD_IMG_DIR}`
     },
     /*{
@@ -107,6 +111,7 @@ const FONT_SOURCE_FILES = [{
         formats: ['woff2', 'woff', 'ttf'], //default ['eot','woff2','woff','ttf','svg']
         characters: '0123456789AaÀàÁáÂâÃãÄäBbCcÇçDdEeÈèÉéÊêËëFfGgHhIiÌìÍíÎîÏïJjKkLlMmNnÑñOoÒòÓóÔôÕõÖöPpQqRrSsTtUuÙùÚúÛûÜüVvWwXxyYÝýŸÿZz!@#$%ˆ&*()_+{}":?><`-=[];\'/.,\\|~©®ª°º±«»¿×÷“',
         sync: true,
+        hash: false,
         dest: `${BUILD_DIR}/${BUILD_FONT_DIR}`
     },
     /*{
@@ -123,7 +128,8 @@ const FONT_SOURCE_FILES = [{
 const ANOTHER_FILES = [{
         dir: SRC_DIR,
         files: ['.htaccess'],
-        dest: BUILD_DIR
+        dest: BUILD_DIR,
+        hash: false
     },
     /*{
         dir:'./your base folder',
@@ -142,7 +148,7 @@ const MUSTACHES = {
     author: 'André Ponce',
     keywords: 'key1,key2',
     name: 'Site Name',
-    url: 'http://www.andreponce.com',
+    url: `http://${HOST}:${PORT}`,
     themeColor: '#ffffff',
     facebook: {
         image: './img/facebook.png',
@@ -175,7 +181,7 @@ const MUSTACHES = {
     mainScript: '<script src="./js/main.js?v=1"></script>',
     fontFaceTemplate: `@font-face {
         font-family: '{{{fontFamily}}}';
-        font-display:swap;        
+        font-display: block;        
         {{{eotSrc}}}
         src: local('{{{fullFontName}}}'), 
             {{#types}}
@@ -191,4 +197,4 @@ const MUSTACHES = {
 //END
 
 //export variables
-module.exports = { VERBOSE, PAGES_EXTENSION, AUTO_PREFIXER_TARGET, TINYPNG_API_KEY, PROXY, PORT, SRC_DIR, SRC_SCSS_DIR, SRC_JS_DIR, SRC_ASSETS_DIR, SRC_FONT_DIR, SRC_IMG_DIR, BUILD_DIR, BUILD_CSS_DIR, BUILD_JS_DIR, BUILD_IMG_DIR, BUILD_FONT_DIR, BUILD_MAPS_DIR, CSS_SOURCE_FILES, HTML_SOURCE_FILES, JS_SOURCE_FILES, IMAGE_SOURCE_FILES, FONT_SOURCE_FILES, ANOTHER_FILES, MUSTACHES, AUTO_CLOSE_TAB_ON_DISCONNECT, STRIP_DEBUG }
+module.exports = { VERBOSE, PAGES_EXTENSION, AUTO_PREFIXER_TARGET, TINYPNG_API_KEY, HOST, PROXY, PORT, SRC_DIR, SRC_SCSS_DIR, SRC_JS_DIR, SRC_ASSETS_DIR, SRC_FONT_DIR, SRC_IMG_DIR, BUILD_DIR, BUILD_CSS_DIR, BUILD_JS_DIR, BUILD_IMG_DIR, BUILD_FONT_DIR, BUILD_MAPS_DIR, CSS_SOURCE_FILES, HTML_SOURCE_FILES, JS_SOURCE_FILES, IMAGE_SOURCE_FILES, FONT_SOURCE_FILES, ANOTHER_FILES, MUSTACHES, AUTO_CLOSE_TAB_ON_DISCONNECT, STRIP_DEBUG }

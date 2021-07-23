@@ -1,0 +1,4 @@
+{
+    "watch": ["config.js", "gulpfile.js"],
+    "exec": "cross-env NODE_ENV=development gulp dev"
+}

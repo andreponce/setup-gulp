@@ -23,7 +23,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
 
     @font-face {
         font-family: 'Chivo';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Chivo Black'), 
                 url('../font/Chivo-Black.woff2') format('woff2'),
@@ -34,7 +34,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Chivo';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Chivo Black Italic'), 
                 url('../font/Chivo-BlackItalic.woff2') format('woff2'),
@@ -45,7 +45,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Chivo';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Chivo Bold'), 
                 url('../font/Chivo-Bold.woff2') format('woff2'),
@@ -56,7 +56,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Chivo';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Chivo Bold Italic'), 
                 url('../font/Chivo-BoldItalic.woff2') format('woff2'),
@@ -67,7 +67,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Chivo';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Chivo Italic'), 
                 url('../font/Chivo-Italic.woff2') format('woff2'),
@@ -78,7 +78,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Chivo';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Chivo Light'), 
                 url('../font/Chivo-Light.woff2') format('woff2'),
@@ -89,7 +89,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Chivo';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Chivo Light Italic'), 
                 url('../font/Chivo-LightItalic.woff2') format('woff2'),
@@ -100,7 +100,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Chivo';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Chivo Regular'), 
                 url('../font/Chivo-Regular.woff2') format('woff2'),
@@ -111,7 +111,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Zeitung Micro GC';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Zeitung Micro GC Black'), 
                 url('../font/ZeitungMicroGC-Black.woff2') format('woff2'),
@@ -122,7 +122,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Zeitung Micro GC';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Zeitung Micro GC Bold'), 
                 url('../font/ZeitungMicroGC-Bold.woff2') format('woff2'),
@@ -133,7 +133,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Zeitung Micro GC';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Zeitung Micro GC Extralight'), 
                 url('../font/ZeitungMicroGC-Extralight.woff2') format('woff2'),
@@ -144,7 +144,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Zeitung Micro GC';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Zeitung Micro GC'), 
                 url('../font/ZeitungMicroGC-Regular.woff2') format('woff2'),
@@ -155,7 +155,7 @@ ao fazer fazê-lo o @fontface não será gerado automaticamente
     }
     @font-face {
         font-family: 'Zeitung Micro GC';
-        font-display:swap;        
+        font-display: block;        
         
         src: local('Zeitung Micro GC Semibold'), 
                 url('../font/ZeitungMicroGC-Semibold.woff2') format('woff2'),

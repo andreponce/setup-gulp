@@ -33,9 +33,14 @@ const reload = require('require-reload')(require),
     // babelify = require("babelify"),
     // classProperties = require("@babel/plugin-proposal-class-properties"),
     vinyl = require("vinyl-source-stream"),
-    buffer = require("vinyl-buffer");
+    buffer = require("vinyl-buffer"),
+    openBrowser = require("react-dev-utils/openBrowser"),
+    hash = require('gulp-hash-filename')
 
 const isProduction = process.env.NODE_ENV == 'production';
+const fileNameFormat = {
+    "format": "{name}.{hash:10}{ext}"
+}
 var updateAssetsAfterChange = false;
 
 // functions
@@ -70,6 +75,7 @@ function processStyle(obj) {
     let _compress = obj.compress;
     let _sync = obj.sync;
     let _dest = obj.dest;
+    let _hash = obj.hash;
 
     obj.ignore = !_sync;
 
@@ -79,6 +85,7 @@ function processStyle(obj) {
 
     let source = src(_files, { cwd: _dir, allowEmpty: true });
     source.pipe(plumber())
+        .pipe(_hash ? hash(fileNameFormat) : noop())
         .pipe((_maps && !isProduction) ? sourcemaps.init({ loadMaps: true }) : noop())
         .pipe(_concat ? concat(_concat) : noop())
         .pipe(_sass ? sass.sync({
@@ -89,7 +96,7 @@ function processStyle(obj) {
         .pipe(_compressBool ? cssnano({ discardComments: { removeAll: true }, zindex: false }) : noop())
         .pipe((_maps && !isProduction) ? sourcemaps.write(`${CONF.BUILD_MAPS_DIR}`) : noop())
         .pipe(dest(_dest))
-        .pipe(_sync ? browsersync.stream() : noop());
+        .pipe(_sync ? browsersync.stream() : noop())
     return source;
 }
 
@@ -122,25 +129,29 @@ function processScript(obj) {
     let _compress = obj.compress;
     let _sync = obj.sync;
     let _dest = obj.dest;
+    let _hash = obj.hash;
 
     obj.ignore = !_sync;
 
     logProcess(obj);
 
     if (_transpile) {
+        const plugins = isProduction ? [
+            ['esmify'],
+            ['tinyify']
+        ] : [];
         let bundle = browserify({
                 basedir: _dir,
                 entries: _files,
-                plugin: [
-                    [require('esmify'), {}]
-                ],
-                debug: !isProduction
+                debug: !isProduction,
+                plugin: plugins
+
             })
-            .plugin('tinyify')
-            .transform("babelify" /*{ compact: false , presets: ["es2015"] }*/ )
+            .transform("babelify")
             .bundle();
         bundle.pipe(vinyl(_concat ? _concat : 'main.js'))
             .pipe(buffer())
+            .pipe(_hash ? hash(fileNameFormat) : noop())
             .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
             .pipe((isProduction && _compress) ? uglify_default() : noop())
             .pipe(dest(_dest))
@@ -149,6 +160,7 @@ function processScript(obj) {
     } else {
         let source = src(_files, { cwd: _dir, allowEmpty: true });
         source.pipe(plumber())
+            .pipe(_hash ? hash(fileNameFormat) : noop())
             .pipe(_concat ? concat(_concat) : noop())
             .pipe((isProduction && CONF.STRIP_DEBUG) ? stripDebug() : noop())
             .pipe((isProduction && _compress) ? uglify_default() : noop())
@@ -199,6 +211,7 @@ function processPages(done) {
 function tinyImages(obj) {
     var tiny = src(obj.files.concat('!**/*.{svg,gif}'), { cwd: obj.dir, allowEmpty: true })
         .pipe(plumber())
+        .pipe(obj.hash ? hash(fileNameFormat) : noop())
         .pipe(tinypng({
             key: CONF.TINYPNG_API_KEY,
             sigFile: `${obj.dir}/.tinypng-sigs`,
@@ -222,12 +235,14 @@ function offlineImagesCompress(obj) {
             svgo: ['--enable', 'cleanupIDs', '--disable', 'convertColors'],
             quiet: !CONF.VERBOSE
         }))
+        .pipe(obj.hash ? hash(fileNameFormat) : noop())
         .pipe(dest(obj.dest));
     return imageCompress;
 }
 
 function moveImages(obj) {
     var images = src(obj.files, { cwd: obj.dir, allowEmpty: true })
+        .pipe(obj.hash ? hash(fileNameFormat) : noop())
         .pipe(dest(obj.dest));
     return images;
 }
@@ -238,6 +253,7 @@ function imagesToWebp(obj) {
             quality: 85,
             method: 5
         }))
+        .pipe(obj.hash ? hash(fileNameFormat) : noop())
         .pipe(dest(obj.dest));
     return webpImages;
 }
@@ -291,6 +307,7 @@ function processFont(obj) {
             text: obj.characters,
             verbose: CONF.VERBOSE
         }))
+        .pipe(obj.hash ? hash(fileNameFormat) : noop())
         .pipe(dest(obj.dest))
     fonts.pipe(through.obj(function(file, enc, cb) {
         let path = file.path;
@@ -303,6 +320,7 @@ function processFont(obj) {
 
 function moveFonts(obj) {
     var fonts = src(obj.files, { cwd: obj.dir, allowEmpty: true })
+        .pipe(obj.hash ? hash(fileNameFormat) : noop())
         .pipe(dest(obj.dest))
     return fonts;
 }
@@ -499,6 +517,7 @@ function processFiles(obj) {
 
     let source = src(obj.files, { cwd: obj.dir, allowEmpty: true });
     source.pipe(plumber())
+        .pipe(obj.hash ? hash(fileNameFormat) : noop())
         .pipe(dest(obj.dest))
         .pipe(_sync ? browsersync.stream() : noop());
     return source;
@@ -518,7 +537,8 @@ function processBrowserSync(done) {
         logConnections: true,
         logLevel: CONF.VERBOSE ? "info" : "silent",
         notify: true,
-        port: CONF.PORT
+        port: CONF.PORT,
+        open: false
 
     };
     if (CONF.PROXY && CONF.PROXY != '') config.proxy = CONF.PROXY;
@@ -533,7 +553,10 @@ function processBrowserSync(done) {
             'client:js': CONF.AUTO_CLOSE_TAB_ON_DISCONNECT ? autoClose : '',
         },
     });
-    browsersync.init(config, done)
+    browsersync.init(config, () => {
+        openBrowser(`http://${CONF.HOST}:${CONF.PORT}`);
+        done();
+    })
 }
 
 function clear(done) {
@@ -585,7 +608,7 @@ task('dev', (done) => {
     watch([`${CONF.SRC_ASSETS_DIR}/**/*.{ttf,otf,woff,woff2,ttc,dfont}`], parallel(processFonts));
     watch([`${CONF.SRC_ASSETS_DIR}/**/*.{png,jpg,jpeg,gif,svg,ico}`], parallel(processImages));
     watch([`${CONF.SRC_DIR}/**/*.{json,xml,htaccess}`], parallel(processAnotherFiles));
-    watch([`./config.js`], parallel(configUpdated));
+    // watch([`./config.js`], parallel(configUpdated));
 
     series(clear,
         processFonts,
