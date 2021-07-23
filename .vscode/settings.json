@@ -1,0 +1,9 @@
+{
+    "svg.preview.background": "black",
+    "window.title": "<PROJECT NAME> : ${workspaceRoot}/../${activeEditorShort}",
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#a50208fa",
+        "statusBar.background" : "#1A1A1A",
+    },
+    "workbench.editor.labelFormat": "medium"
+}
