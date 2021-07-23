@@ -8,11 +8,11 @@ Just edit the config.js file, you don't have to restart gulp while it is running
 
 Development mode.
 ```bash
-$ npm run dev
+$ npm start
 ```
 Production mode.
 ```bash
-$ npm run prod
+$ npm run build
 ```
 Production mode and run server.
 ```bash
