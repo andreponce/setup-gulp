@@ -1,6 +1,6 @@
 {
     "svg.preview.background": "black",
-    "window.title": "<PROJECT NAME> : ${workspaceRoot}${separator}${activeEditorShort}",
+    "window.title": "<PROJECT NAME> : ${rootName}${separator}${activeEditorShort}",
     "workbench.colorCustomizations": {
         "titleBar.activeBackground": "#a50208fa",
         "statusBar.background" : "#1A1A1A",
