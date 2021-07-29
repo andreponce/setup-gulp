@@ -1,8 +1,5 @@
 import Module from "./module";
 import $ from "jquery";
-import { Scene, PerspectiveCamera, WebGLRenderer } from 'three';
-
-new Scene();
 
 var test = "Started!";
 console.log(test);

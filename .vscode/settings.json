@@ -4,6 +4,7 @@
     "workbench.colorCustomizations": {
         "titleBar.activeBackground": "#a50208fa",
         "statusBar.background" : "#1A1A1A",
+        "tab.activeBorder": "#a50208fa"
     },
     "workbench.editor.labelFormat": "medium"
 }

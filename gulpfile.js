@@ -14,7 +14,7 @@ const reload = require('require-reload')(require),
     uglify_default = require('gulp-uglify-es').default,
     stripDebug = require('gulp-strip-debug'),
     htmlmin = require('gulp-htmlmin'),
-    sass = require('gulp-sass'),
+    sass = require('gulp-sass')(require('sass')),
     cssnano = require('gulp-cssnano'),
     sourcemaps = require('gulp-sourcemaps'),
     minifyInline = require('gulp-minify-inline'),
@@ -30,7 +30,7 @@ const reload = require('require-reload')(require),
     browsersync = require("browser-sync").create(),
     autoClose = require('browser-sync-close-hook'),
     browserify = require("browserify"),
-    // babelify = require("babelify"),
+    babelify = require("babelify"),
     // classProperties = require("@babel/plugin-proposal-class-properties"),
     vinyl = require("vinyl-source-stream"),
     buffer = require("vinyl-buffer"),
@@ -145,9 +145,8 @@ function processScript(obj) {
                 entries: _files,
                 debug: !isProduction,
                 plugin: plugins
-
             })
-            .transform("babelify")
+            .transform(babelify.configure({ presets: ["@babel/preset-env"], compact: isProduction }))
             .bundle();
         bundle.pipe(vinyl(_concat ? _concat : 'main.js'))
             .pipe(buffer())
