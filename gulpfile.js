@@ -553,7 +553,7 @@ function processBrowserSync(done) {
         },
     });
     browsersync.init(config, () => {
-        openBrowser(`http://${CONF.HOST}:${CONF.PORT}`);
+        openBrowser(CONF.PROXY ? CONF.PROXY.replace(CONF.HOST, `${CONF.HOST}:${CONF.PORT}`) : `http://${CONF.HOST}:${CONF.PORT}`);
         done();
     })
 }
