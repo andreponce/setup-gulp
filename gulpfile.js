@@ -136,10 +136,11 @@ function processScript(obj) {
     logProcess(obj);
 
     if (_transpile) {
-        const plugins = isProduction ? [
-            ['esmify'],
+        const plugins = [
+            ['esmify', { nodeModules: CONF.NODE_MODULES_TRANSFORM }]
+        ].concat(isProduction ? [
             ['tinyify']
-        ] : [];
+        ] : [])
         let bundle = browserify({
                 basedir: _dir,
                 entries: _files,
