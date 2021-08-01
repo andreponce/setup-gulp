@@ -1,3 +1,6 @@
 /node_modules
 /build
 /**/.tinypng-sigs
+.DS_Store*
+**/.DS_Store
+*.log
