@@ -1,8 +1,8 @@
 //$easeInOutExpo: cubic-bezier(1, 0, 0, 1);
-//$easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
-//$easeInOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
-$easeOutQuad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-$easeInOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+$easeOutQuart: cubic-bezier(0.25, 1, 0.5, 1);
+$easeInOutQuart: cubic-bezier(0.76, 0, 0.24, 1);
+$easeOutQuad: cubic-bezier(0.5, 1, 0.89, 1);
+$easeInOutQuad: cubic-bezier(0.45, 0, 0.55, 1);
 @mixin pseudo($display: block, $pos: absolute, $content: "") {
     content: $content;
     display: $display;
@@ -23,8 +23,20 @@ $easeInOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     }
 }
 
+@mixin padding($value: $value, $boxSizing: border-box) {
+    padding: $value;
+    box-sizing: $boxSizing;
+}
+
 @mixin flex($justify: flex-start, $align: flex-start, $direction: row) {
     display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-direction: $direction;
+}
+
+@mixin inline-flex($justify: flex-start, $align: flex-start, $direction: row) {
+    display: inline-flex;
     justify-content: $justify;
     align-items: $align;
     flex-direction: $direction;
@@ -33,7 +45,7 @@ $easeInOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 @mixin transition($time: 0.3s, $props: all, $ease: $easeOutQuad, $delay: 0s) {
     transition-duration: $time;
     transition-property: $props;
-    transition-timing-function: $easeOutQuad;
+    transition-timing-function: $ease;
     transition-delay: $delay;
 }
 
@@ -68,7 +80,7 @@ $easeInOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 @mixin retina {
-    @media (min-width: 1801px) {
+    @media (min-width: 2560px) {
         @content;
     }
 }
@@ -87,6 +99,12 @@ $easeInOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
 @mixin x1380 {
     @media (max-width: 1380px) {
+        @content;
+    }
+}
+
+@mixin x1280 {
+    @media (max-width: 1280px) {
         @content;
     }
 }
