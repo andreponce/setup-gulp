@@ -62,6 +62,6 @@
     },
     "dependencies": {
         "jquery": ">=3.6.0",
-        "three": "^0.131.0"
+        "three": "^0.137.0"
     }
 }
